@@ -6,6 +6,7 @@ Auth::routes(['register' => false]);
 
 
 
+
  Route::any('/customLogin', 'Auth\LoginController@customLogin')->name('customLogin');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
