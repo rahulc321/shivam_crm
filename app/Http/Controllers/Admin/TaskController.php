@@ -25,7 +25,7 @@ class TaskController extends Controller
                  
                 $query->where('assigned_to', Auth::id());
             }
-        })->orderBy('id','ASC')->get();
+        })->orderBy('id','DESC')->get();
     
         return view('admin.task.index',$this->data);
     }
@@ -37,9 +37,13 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $this->data['users'] = User::whereDoesntHave('roles', function ($query) {
-            $query->where('title', 'Admin');
-        })->get();
+        // $this->data['users'] = User::whereDoesntHave('roles', function ($query) {
+        //     $query->where('title', 'Admin');
+        // })->get();
+
+        $this->data['users'] = User::where('type','service_agent')->get();
+        $this->data['end_users'] = User::where('type','end_user')->get();
+        
         return view('admin.task.create',$this->data);
     
     }
@@ -55,6 +59,7 @@ class TaskController extends Controller
 
         //dd($request->all());
         $newTask = new Task();
+        $newTask->end_user = $request->end_user;
         $newTask->title = $request->title;
         $newTask->description = $request->description;
         $newTask->assigned_to = $request->assigned_to;

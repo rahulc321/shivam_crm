@@ -18,4 +18,9 @@ class Task extends Model
         return User::whereIn('id', explode(',', $this->assigned_to))->get();
          
     }
+
+
+    public function end_user_name(){
+        return $this->hasOne(User::class,'id','end_user');
+    }
 }
