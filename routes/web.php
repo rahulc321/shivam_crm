@@ -33,4 +33,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::any('salesUpdate/{id}', 'LeadsController@salesUpdate')->name('salesUpdate');
 
 
+    Route::any('chat/{id}', 'ChatController@index')->name('chat.index');
+    Route::any('getUnreadMessageCounts', 'ChatController@getUnreadMessageCounts')->name('getUnreadMessageCounts');
+    Route::any('chat', 'ChatController@store')->name('salesUpdate')->name('chatStore');
+    Route::any('chat/sse/{receiverId}', 'ChatController@sse')->name('salesUpdate')->name('chat.sse');
+
+    // Route::get('chat/{receiverId}', [ChatController::class, 'index'])->name('chat.index');
+    // Route::post('chat', [ChatController::class, 'store'])->name('chat.store');
+    // Route::get('chat/sse/{receiverId}', [ChatController::class, 'sse'])->name('chat.sse');
+
+
 });
