@@ -49,7 +49,7 @@
                                     @foreach($messages as $key => $value)
                                      
                                     <tr>
-                                        <td>{{$key}}</td>
+                                        <td>{{$key+1}}</td>
                                         <td><span class="badge bg-outline-success">{{@$value->postedBy->full_name}}</span></td>
                                          
                                         <td>
