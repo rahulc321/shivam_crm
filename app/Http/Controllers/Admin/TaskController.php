@@ -65,8 +65,49 @@ class TaskController extends Controller
         $newTask->assigned_to = $request->assigned_to;
         $newTask->created_by = Auth::Id();
         $newTask->status = $request->status;
-        $newTask->due_date = $request->due_date;
+        $newTask->due_date = $request->due_date.' '.$request->time;
         $newTask->save();
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Send email to Agent
+        $this->data['end_user'] = User::where('id',$request->end_user)->first();
+        $agent = User::where('id',$request->assigned_to)->first();
+        $this->data['newTask'] = $newTask;
+
+        $email = $agent->email;
+
+       // return view('email.agent',$this->data);die;
+        // dd($data);
+        \Mail::send("email.agent", $this->data, function (
+            $message
+        ) use ($email) {
+            $message
+                ->to($email)
+                ->from("info@gmail.com")
+                ->subject("Congratulation Task Assigned");
+        });
+
+        //////////////////////////////////////////////////////////////////////////////
+        $this->data['end_user'] = User::where('id',$request->assigned_to)->first();
+        $end_user = User::where('id',$request->end_user)->first();
+        $this->data['newTask'] = $newTask;
+
+        $email = $end_user->email;
+
+        //return view('email.user',$this->data);die;
+        // dd($data);
+        \Mail::send("email.user", $this->data, function (
+            $message
+        ) use ($email) {
+            $message
+                ->to($email)
+                ->from("info@gmail.com")
+                ->subject("Congratulation Task Created");
+        });
+
+        /////////////////////////////////////////////////////////////////////////////
+
         session()->flash('success', 'You have successfully added!');
         return redirect()->route('admin.task.index');
     }
@@ -127,8 +168,15 @@ class TaskController extends Controller
     public function destroy($id)
     {   
         $task = Task::find($id);
-       // $task->delete();
+         $task->delete();
         session()->flash('warning', 'You have successfully deleted!');
         return back();
+    }
+    
+    public function task_detail($id)
+    {   
+        error_reporting(0);
+        $this->data['task'] = Task::find($id);
+        return view('admin.task.task_detail',$this->data); 
     }
 }

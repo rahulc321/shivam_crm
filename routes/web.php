@@ -8,6 +8,7 @@ Auth::routes(['register' => false]);
 
 
  Route::any('/customLogin', 'Auth\LoginController@customLogin')->name('customLogin');
+ Route::any('/task_detail/{id}', 'Admin\TaskController@task_detail')->name('task_detail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');

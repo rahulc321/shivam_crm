@@ -23,4 +23,8 @@ class Task extends Model
     public function end_user_name(){
         return $this->hasOne(User::class,'id','end_user');
     }
+
+    public function agent_name(){
+        return $this->hasOne(User::class,'id','assigned_to');
+    }
 }

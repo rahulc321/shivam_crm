@@ -106,7 +106,18 @@
 
 
 
-                                        <td><span class="badge bg-outline-info">{{$value->status}}</span></td>
+                                        <td>
+                                            @php
+                                            $badgeClass = match($value->status) {
+                                            'pending' => 'bg-outline-warning',
+                                            'reject' => 'bg-outline-danger',
+                                            'completed'=> 'bg-outline-success',
+                                            'in_progress'=> 'bg-outline-info',
+                                            default => 'bg-outline-secondary',
+                                            };
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $value->status }}</span>
+                                        </td>
                                         <td>
                                             @if (Auth::user()->roles->contains('title', 'Admin'))
                                             <a class="" href="{{ route('admin.task.edit', $value->id) }}">
@@ -133,8 +144,7 @@
 
                                             @else
 
-                                            <a
-                                                href="{{ route('admin.chat.index', 1) }}?taskId={{$value->id}}">
+                                            <a href="{{ route('admin.chat.index', 1) }}?taskId={{$value->id}}">
                                                 <span class="badge bg-outline-info msg_{{$value->id}}">
                                                     <i class="ri-chat-4-fill"></i>
                                                     <!-- Unread count as a circle -->

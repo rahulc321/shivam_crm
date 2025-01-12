@@ -56,7 +56,21 @@
                                         <td>{{$value->full_name}}</td>
                                         <td>{{$value->email}}</td>
                                         <td>{{$value->phone_number}}</td>
-                                        <td><span class="badge bg-outline-info">{{$value->type}}</span></td>
+                                        <td>
+                                            @php
+                                            $badgeClass = match($value->type) {
+                                            'admin' => 'bg-outline-primary',
+                                            'end_user' => 'bg-outline-secondary',
+                                            'service_agent' => 'bg-outline-success',
+                                            'potential_user' => 'bg-outline-warning',
+                                            'reseller' => 'bg-outline-danger',
+                                            'retailer' => 'bg-outline-info',
+                                            'distributor' => 'bg-outline-dark',
+                                            default => 'bg-outline-light',
+                                            };
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $value->type }}</span>
+                                        </td>
                                         <td>
                                             <a class="" href="{{ route('admin.users.edit', $value->id) }}">
                                                 <span class="badge bg-outline-info">Edit</span>

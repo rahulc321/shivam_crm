@@ -57,6 +57,29 @@ class MessageController extends Controller
             $data->user_id = implode(', ', $request->user_id);
             $data->message = $request->message;
             $data->save();
+
+            // Send email to all users
+
+            $allUsers = User::whereIn('id', $request->user_id)->get();
+
+            // Iterate through users and send emails
+            foreach ($allUsers as $user) {
+                $email = $user->email; // Get user's email
+
+                // Prepare dynamic data for the email
+                $data = [
+                    'name' => $user->full_name, // Dynamic user name
+                    'message_body' => $request->message,
+                ];
+
+                // Send the email
+                \Mail::send('email.message', $data, function ($message) use ($email) {
+                    $message
+                        ->to($email)
+                        ->from('info@gmail.com', 'CRM')
+                        ->subject('New Message from admin side.');
+                });
+            }
              
             # set a success message in the session
             session()->flash('success', 'You have successfully send message!');
