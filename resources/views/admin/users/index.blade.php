@@ -26,7 +26,7 @@
                             List Users
                         </div>
 
-                        <a class="" href='{{ route("admin.users.create") }}' style="float:right !important"><span
+                        <a class="" href='{{ route("admin.users.create") }}?type=<?=@$_REQUEST['type']?>' style="float:right !important"><span
                                 class="badge bg-outline-info">Add User</span></a>
 
                     </div>
@@ -47,12 +47,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach($users as $key => $value)
-                                    @if($key == 0)
-                                    @continue
-                                    <!-- Skip this iteration -->
-                                    @endif
+                                     
                                     <tr>
-                                        <td>{{$key}}</td>
+                                        <td>{{$key+1}}</td>
                                         <td>{{$value->full_name}}</td>
                                         <td>{{$value->email}}</td>
                                         <td>{{$value->phone_number}}</td>

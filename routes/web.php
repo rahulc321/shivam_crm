@@ -22,6 +22,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::any('admin', 'UsersController@admin')->name('admin');
+    Route::any('admin_create', 'UsersController@admin_create')->name('admin.create');
+    Route::any('admin_store', 'UsersController@admin_store')->name('admin.store');
+    Route::any('admin_edit/{id}', 'UsersController@admin_edit')->name('admin.edit');
+    Route::any('admin_update/{id}', 'UsersController@admin_update')->name('admin.update');
     Route::resource('users', 'UsersController');
 
     // Case Intake

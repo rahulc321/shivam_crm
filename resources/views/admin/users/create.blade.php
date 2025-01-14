@@ -15,7 +15,7 @@
                     </nav>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
     <div class="row">
         <div class="col-xl-12">
@@ -27,7 +27,7 @@
 
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data"
+                <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data"
                         class="row g-3 mt-0">
                         @csrf
 
@@ -35,12 +35,12 @@
                             <label class="form-label">Type<code>*</code></label>
                             <select class="form-control" name="type" id="type" required onchange="showFields()">
                                 <option value="">Select</option>
-                                <option value="end_user">End User</option>
-                                <option value="service_agent">Service Agents</option>
-                                <option value="potential_user">Potential User</option>
-                                <option value="reseller">Reseller</option>
-                                <option value="retailer">Retailer</option>
-                                <option value="distributor">Distributor</option>
+                                <option value="end_user" <?php if($_REQUEST['type'] == 'end_user'){ echo 'selected'; } ?>>End User</option>
+                                <option value="service_agent" <?php if($_REQUEST['type'] == 'service_agent'){ echo 'selected'; } ?>>Service Agents</option>
+                                <option value="potential_user" <?php if($_REQUEST['type'] == 'potential_user'){ echo 'selected'; } ?>>Potential User</option>
+                                <option value="reseller" <?php if($_REQUEST['type'] == 'reseller'){ echo 'selected'; } ?>>Reseller</option>
+                                <option value="retailer" <?php if($_REQUEST['type'] == 'retailer'){ echo 'selected'; } ?>>Retailer</option>
+                                <option value="distributor" <?php if($_REQUEST['type'] == 'distributor'){ echo 'selected'; } ?>>Distributor</option>
                             </select>
                         </div>
 

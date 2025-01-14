@@ -30,7 +30,7 @@
             @if (Auth::user()->roles->contains('title', 'Admin'))
             <!-- Start::slide -->
             <li
-                class="slide has-sub {{ request()->is('admin/permissions*') ? 'open' : '' }} {{ request()->is('admin/roles*') ? 'open' : '' }} {{ request()->is('admin/users*') ? 'open' : '' }}">
+                class="slide has-sub {{ request()->is('admin/permissions*') ? 'open' : '' }} {{ request()->is('admin/roles*') ? 'open' : '' }} {{ request()->is('admin/admin*') ? 'open' : '' }}">
                 <a href="javascript:void(0);"
                     class="side-menu__item {{ request()->is('admin/permissions*') ? 'active' : '' }} {{ request()->is('admin/roles*') ? 'active' : '' }} {{ request()->is('admin/users*') ? 'active' : '' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24"
@@ -54,15 +54,57 @@
                     </li>
 
                     <li class="slide">
-                        <a href='{{ route("admin.users.index") }}'
-                            class="side-menu__item {{ request()->is('admin/users*') ? 'active' : '' }}">Users</a>
+                        <a href='{{ route("admin.admin") }}'
+                            class="side-menu__item {{ request()->is('admin/admin*') ? 'active' : '' }}">Admin</a>
                     </li>
 
 
 
                 </ul>
             </li>
-            
+
+
+            <!--  -->
+            <li
+                class="slide has-sub {{ request()->is('admin/permissions*') ? 'open' : '' }} {{ request()->is('admin/roles*') ? 'open' : '' }} {{ request()->is('admin/users*') ? 'open' : '' }}">
+                <a href="javascript:void(0);"
+                    class="side-menu__item {{ request()->is('admin/permissions*') ? 'active' : '' }} {{ request()->is('admin/roles*') ? 'active' : '' }} {{ request()->is('admin/users*') ? 'active' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24"
+                        width="24px" fill="#5f6368">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm8 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zM8 13c-2.33 0-7 1.17-7 3.5V19h7v-2.5c0-2.33 4.67-3.5 7-3.5H8z" />
+                    </svg>
+                    <span class="side-menu__label">Users</span>
+                    <i class="ri-arrow-right-s-line side-menu__angle"></i>
+                </a>
+                <ul class="slide-menu child1 pages-ul">
+
+
+                    <?php
+                        $roles = DB::table('roles')->where('title','!=','Admin')->get();
+                    ?>
+                    @foreach($roles as $role)
+                    <li class="slide">
+                        @php
+                        // Assuming $role->name contains the role name
+                        $roleName = is_object($role) ? $role->title : $role;
+                        $displayRole = ucfirst(str_replace('end_user_', '', $roleName));
+                        @endphp
+                        <a href="{{ route('admin.users.index', ['type' => $roleName]) }}"
+                            class="side-menu__item {{ request()->query('type') === $roleName ? 'active' : '' }}">
+                            {{ $displayRole }}
+                        </a>
+                    </li>
+                    @endforeach
+
+
+
+
+
+                </ul>
+            </li>
+
 
             <!-- MESSAGE -->
             <li class="slide">
