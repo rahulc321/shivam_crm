@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Task;
 use App\User;
+use App\Training;
 use Auth;
 
 class TaskController extends Controller
@@ -178,5 +179,20 @@ class TaskController extends Controller
         error_reporting(0);
         $this->data['task'] = Task::find($id);
         return view('admin.task.task_detail',$this->data); 
+    }
+
+    public function changeStatus($id,Request $request)
+    {   
+        $task = Task::find($id);
+        $task->status = $request->status;
+        $task->save();
+        session()->flash('success', 'You have successfully update task status!');
+        return back();
+    }
+
+    // Training module
+    public function training(){
+        $this->data['trainings'] = Training::get();
+        return view('admin.training.index',$this->data); 
     }
 }

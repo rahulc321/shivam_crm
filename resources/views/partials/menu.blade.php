@@ -137,6 +137,20 @@
             </li>
 
 
+            <li class="slide">
+                <a href='{{ route("admin.training") }}'
+                    class="side-menu__item {{ request()->is('admin/training*') ? 'active' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24"
+                        width="24px" fill="#5f6368">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M12 2L1 9l11 7 9-5.9V17h2V9L12 2zm0 2.75L18.14 9 12 13.25 5.86 9 12 4.75zM4 19h16v2H4v-2z" />
+                    </svg>
+                    <span class="side-menu__label">Training</span>
+                </a>
+            </li>
+
+
         </ul>
         <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24"
                 height="24" viewBox="0 0 24 24">
