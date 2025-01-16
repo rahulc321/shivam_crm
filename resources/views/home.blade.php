@@ -11,12 +11,12 @@
 
 .bg-2 {
     background: rgb(131, 58, 180);
-    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;
 }
 
 .bg-3 {
     background: rgb(34, 193, 195);
-    background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(115, 253, 45, 0.8379726890756303) 100%);
+    background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%) !important;
 }
 
 .bg-4 {
@@ -33,6 +33,9 @@
     border: none;
     margin-bottom: 20px;
     padding: 20px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+    border-width: 0;
+    transition: all .2s;
 }
 
 .widget-content {
