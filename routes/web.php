@@ -37,6 +37,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::any('approve/{id}', 'LeadsController@salesApprove')->name('sales.approve');
     Route::any('salesRejct/{id}', 'LeadsController@salesRejct')->name('sales.reject');
     Route::any('salesUpdate/{id}', 'LeadsController@salesUpdate')->name('salesUpdate');
+    Route::any('changeStatus/{id}', 'TaskController@changeStatus')->name('task.changeStatus');
+
+
+    // Training module
+    Route::any('training', 'TaskController@training')->name('training');
 
 
     Route::any('chat/{id}', 'ChatController@index')->name('chat.index');

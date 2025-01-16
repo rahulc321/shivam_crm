@@ -1,33 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'CRM - Task')
+@section('title', 'CRM - Training')
 @section('content')
-<style>
-.tooltip-inner {
-    max-width: 300px;
-    /* Adjust this to set the desired width */
-    width: auto;
-    /* Allow auto width if needed */
-    background-color: #e8f5e9;
-    /* Light green background */
-    color: #2e7d32;
-    /* Dark green text */
-    border-radius: 8px;
-    /* Rounded corners */
-    font-size: 14px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Box shadow for tooltip */
-    border: 1px solid #c8e6c9;
-    /* Slightly darker border for contrast */
-    text-align: left;
-    /* Align text to the left */
-}
-
-.tooltip-arrow {
-    color: #e8f5e9;
-    /* Matches the background of the tooltip */
-}
-</style>
+ 
 <div class="main-content app-content">
     <div class="container-fluid">
         <div class="my-4 page-header-breadcrumb d-flex align-items-center justify-content-between flex-wrap gap-2">
@@ -37,7 +11,7 @@
                     <nav>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Task</li>
+                            <li class="breadcrumb-item active" aria-current="page">Training</li>
                         </ol>
                     </nav>
                 </div>
@@ -50,11 +24,11 @@
                 <div class="card custom-card">
                     <div class="card-header">
                         <div class="card-title">
-                            List Task
+                            List Training 
                         </div>
                         @if (Auth::user()->roles->contains('title', 'Admin'))
                         <a class="" href='{{ route("admin.task.create") }}' style="float:right !important"><span
-                                class="badge bg-outline-info">Create New Task</span></a>
+                                class="badge bg-outline-info">Create New Training</span></a>
                         @endif
                     </div>
 
@@ -75,7 +49,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($tasks as $key => $value)
+                                    @foreach($trainings as $key => $value)
 
                                     <tr>
                                         <td>{{$key+1}}</td>
@@ -207,39 +181,5 @@
     </div>
 </div>
 
-
-
-<script>
-// Initialize tooltips
-document.addEventListener('DOMContentLoaded', function() {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    const tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
-
-
-
-// Collect task IDs in batches (for example, 100 tasks at a time)
-let taskIds = @json($tasks).map(task => task.id);
-
-// Open SSE connection for batch processing
-const eventSource = new EventSource("{{ route('admin.getUnreadMessageCounts') }}?task_ids=" + taskIds.join(','));
-
-eventSource.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    for (let taskId in data) {
-        const unreadCount = data[taskId];
-        const unreadCountElement = document.getElementById(`unread-count-${taskId}`);
-        if (unreadCountElement) {
-            unreadCountElement.textContent = unreadCount;
-        }
-    }
-};
-
-eventSource.onerror = function() {
-    console.log("Error with SSE connection");
-};
-</script>
-
+ 
 @endsection
