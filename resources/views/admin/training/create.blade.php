@@ -2,8 +2,6 @@
 @section('title', 'CRM - Create Task')
 @section('content')
 <style>
-
-
 /* Style for the user details box */
 .details-box {
     background-color: #e8f5e9;
@@ -40,7 +38,7 @@
                     <nav>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Create Task</li>
+                            <li class="breadcrumb-item active" aria-current="page">Create Training</li>
                         </ol>
                     </nav>
                 </div>
@@ -52,12 +50,12 @@
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
-                        Create Task
+                        Create Training
                     </div>
 
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.task.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.trainingStore') }}" method="POST" enctype="multipart/form-data"
                         class="row g-3 mt-0">
                         @csrf
 
@@ -65,69 +63,50 @@
                             <label class="form-label">Title<code>*</code></label>
                             <input type="text" name="title" class="form-control" placeholder="Title">
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">End User<code>*</code></label>
-                            <select class="form-control end_user" name="end_user" id="end_user" required>
+                            <label class="form-label">Video<code>*</code></label>
+                            <input type="file" id="videoInput" name="file" class="form-control" placeholder="Title"
+                                accept="video/*">
+                            <input type="text" id="videoTime" name="video_time" class="video_time"
+                                placeholder="Video Duration" readonly>
+                            <div id="errorMessage" style="color: red; display: none;">Video should be greater than 0
+                                seconds.</div>
+                        </div>
+
+
+
+                        <div class="col-md-4">
+                            <label class="form-label">Role<code>*</code></label>
+                            <select class="form-control end_user" name="role" id="end_user" required>
                                 <option value="">Select</option>
-                                @foreach($end_users as $end_user)
-                                <option value="{{ $end_user->id }}" rel="{{ json_encode($end_user) }}">
-                                    {{ $end_user->full_name }}
+                                @foreach($roles as $key=>$role)
+                                @if($key != 0)
+                                <option value="{{ $role->title }}">
+                                    {{ $role->title }}
                                 </option>
+                                @endif
                                 @endforeach
                             </select>
 
-                            <ul id="user_details" style="display: none;" class="details-box">
-                                <li><strong>Email:</strong> <span id="user_email"></span></li>
-                                <li><strong>Phone:</strong> <span id="user_phone"></span></li>
-                                <li><strong>Address:</strong> <span id="user_address"></span></li>
-                            </ul>
                         </div>
 
 
-
-                        <div class="col-md-4">
-                            <label class="form-label">Assign To<code>*</code></label>
-                            <select class="form-control" name="assigned_to" id="type" required>
-                                <option value="">Select</option>
-
-                                @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->full_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label class="form-label">Due Date<code>*</code></label>
-                            <input type="date" name="due_date" class="form-control" placeholder="">
-                        </div>
-
-                        <div class="col-md-2">
-                            <label class="form-label">Time<code>*</code></label>
-                            <input type="time" name="time" class="form-control" placeholder="">
-                        </div>
 
                         <div class="col-md-4">
                             <label class="form-label">Status<code>*</code></label>
                             <select class="form-control" name="status" id="type" required>
-                                <option value="pending">Pending</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Completed</option>
-
+                                <option value="active">Active</option>
+                                <option value="inactive">In Active</option>
 
                             </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Description<code>*</code></label>
-                            <textarea class="form-control" name="description" required
-                                placeholder="Type description here....."></textarea>
                         </div>
 
                         <!-- Dynamic Fields Section -->
                         <div id="dynamic-fields" class="row g-3"></div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Create Task</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -138,58 +117,46 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-function showFields() {
-    const type = document.getElementById('type').value;
-    const dynamicFields = document.getElementById('dynamic-fields');
-    dynamicFields.innerHTML = fieldsData[type] || '';
-}
-</script>
+document.getElementById('videoInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const errorMessage = document.getElementById('errorMessage');
+    const videoTimeInput = document.getElementById('videoTime');
 
-<script>
-$(document).ready(function() {
-    $('#end_user').change(function() {
-        // Get selected option
-        const selectedOption = $(this).find(':selected');
+    errorMessage.style.display = 'none'; // Hide error message initially
+    videoTimeInput.value = ''; // Clear previous value
 
-        // Get 'rel' attribute
-        const relData = selectedOption.attr('rel');
+    if (file) {
+        const videoElement = document.createElement('video');
+        videoElement.preload = 'metadata';
 
-        // Parse JSON safely
-        try {
-            const userData = JSON.parse(relData);
+        videoElement.onloadedmetadata = function() {
+            window.URL.revokeObjectURL(videoElement.src); // Free memory
+            const duration = videoElement.duration; // Duration in seconds
 
-            if (userData) {
-                // Update the details in the <ul>
-                $('#user_email').text(userData.email || 'N/A');
-                $('#user_phone').text(userData.phone_number || 'N/A');
-                $('#user_address').text(userData.address || 'N/A');
+            if (duration > 0) {
+                // Format duration as HH:MM:SS
+                const hours = Math.floor(duration / 3600);
+                const minutes = Math.floor((duration % 3600) / 60);
+                const seconds = Math.floor(duration % 60);
+                const formattedTime =
+                    (hours > 0 ? hours.toString().padStart(2, '0') + ':' : '') +
+                    minutes.toString().padStart(2, '0') + ':' +
+                    seconds.toString().padStart(2, '0');
 
-                // Show the <ul>
-                $('#user_details').show();
+                videoTimeInput.value = formattedTime; // Set the video duration
+            } else {
+                errorMessage.style.display = 'block'; // Show error message
             }
-        } catch (error) {
-            console.error("Error parsing user data:", error);
-            // Hide the <ul> if parsing fails
-            $('#user_details').hide();
-        }
-    });
-});
+        };
 
-$(document).ready(function() {
-    // Handle Select All checkbox change
-    $('#select-all').on('change', function() {
-        const isChecked = $(this).is(':checked');
+        videoElement.onerror = function() {
+            errorMessage.style.display = 'block'; // Show error message for invalid files
+        };
 
-        $('#permissions1 option').prop('selected', isChecked);
-        $('#permissions1').trigger('change'); // Trigger change to update any plugins
-    });
-
-    // Update Select All checkbox based on individual selections
-    $('#permissions1').on('change', function() {
-        const allSelected = $('#permissions1 option').length === $('#permissions1 option:selected')
-            .length;
-        $('#select-all').prop('checked', allSelected);
-    });
+        videoElement.src = URL.createObjectURL(file);
+    }
 });
 </script>
+
+
 @endsection

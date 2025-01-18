@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\User;
 use App\Training;
+use App\Role;
+use App\VideoView;
 use Auth;
 
 class TaskController extends Controller
@@ -25,9 +27,29 @@ class TaskController extends Controller
             } else {
                  
                 $query->where('assigned_to', Auth::id());
+                
             }
         })->orderBy('id','DESC')->get();
-    
+         
+        if (Auth::user()->type == 'service_agent') {
+            $userId = Auth::Id();
+
+            $totalVideos = \DB::table('training')->where('role',Auth::user()->type)->count();
+
+            $unviewedVideos = \DB::table('training')->where('role',Auth::user()->type)
+            ->leftJoin('video_views', function ($join) use ($userId) {
+            $join->on('training.id', '=', 'video_views.video_id')
+            ->where('video_views.user_id', '=', $userId);
+            })
+            ->whereNull('video_views.id')
+            ->count();
+
+            $hasViewedAll = ($unviewedVideos === 0);
+
+        }
+         
+        $this->data['task_access'] = $hasViewedAll;
+        
         return view('admin.task.index',$this->data);
     }
 
@@ -192,7 +214,99 @@ class TaskController extends Controller
 
     // Training module
     public function training(){
-        $this->data['trainings'] = Training::get();
+ 
+            // Get the current user's ID
+        $currentUserId = Auth::id();
+
+        // Fetch trainings with the video view count for the current user
+
+        if (Auth::user()->roles->contains('title', 'Admin')){
+            $this->data['trainings'] = Training::with('viewedByUser')->get();
+        }else{
+            $this->data['trainings'] = Training::with('viewedByUser')->where('role',Auth::user()->type)->get();
+ 
+        }
+        
         return view('admin.training.index',$this->data); 
     }
+
+    public function trainingCreate(){
+        error_reporting(0);
+        $this->data['roles'] = Role::all();
+        return view('admin.training.create',$this->data); 
+    }
+    
+    public function trainingStore(Request $request)
+    {
+        
+       
+
+        // Handle video file upload
+        $videoPath = null;
+        if ($request->hasFile('file')) {
+            $video = $request->file('file');
+
+            // Check the file size (optional step for additional security)
+            
+
+            // Create a unique file name and specify the destination path
+            $videoName = time() . '_' . $video->getClientOriginalName();
+            $destinationPath = public_path('videos'); // Direct path to public/videos folder
+
+            // Move the uploaded file to the public/videos directory
+            $video->move($destinationPath, $videoName);
+
+            // Store the relative path of the video
+            $videoPath = 'videos/' . $videoName;
+        }
+
+         
+        // Create a new training record and save it to the database
+        $training = new Training();
+        $training->title = $request->title;
+        $training->video_url = $videoPath; // Save the public path of the video
+        $training->role = $request->role;
+        $training->status = $request->status;
+        $training->video_time = $request->video_time;
+        $training->save();
+
+        // Set success message and redirect back
+        session()->flash('success', 'You have successfully added the training!');
+        return redirect()->route('admin.training');
+    }
+
+    public function markVideoWatched(Request $request)
+    {
+
+       
+        // Check if the user has already watched the video
+        $viewRecord = VideoView::firstOrCreate(
+            [
+                'video_id' => $request['video_id'],
+                'user_id' => $request['user_id'],
+            ],
+            [
+                'view_count' => 1,
+            ]
+        );
+
+        // if (!$viewRecord->wasRecentlyCreated) {
+        //     $viewRecord->increment('view_count');
+        // }
+
+        return response()->json(['success' => true, 'message' => 'Video marked as watched successfully!']);
+    }
+
+    // Delete trainings
+    public function trainingDelete($id,Request $request)
+    {   
+        $trainingDelete = Training::find($id);
+        
+        //$trainingDelete->save();
+        session()->flash('warning', 'You have successfully Deleted!');
+        return back();
+    }
+
+    
+
 }
