@@ -60,7 +60,7 @@
 
                     <div class="card-body">
 
-                        @if($task_access == 0)
+                    @if(!$task_access && !Auth::user()->roles->contains('title', 'Admin'))
 
                         <h6 style="color: red;">
                             <i>Please review all training videos before you can access this tab! <a href="{{url('admin/training')}}">Click Here</a></i>
@@ -144,6 +144,7 @@
                                                 </span>
                                             </a>
                                             @else
+                                            
 
                                             <a class="badge bg-outline-info" href="javascript:;" data-bs-toggle="modal"
                                                 data-bs-target="#changeStatusModal_{{ $value->id }}">Change Status</a>
