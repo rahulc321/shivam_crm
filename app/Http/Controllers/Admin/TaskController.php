@@ -48,7 +48,7 @@ class TaskController extends Controller
 
         }
          
-        $this->data['task_access'] = $hasViewedAll;
+        $this->data['task_access'] = @$hasViewedAll;
         
         return view('admin.task.index',$this->data);
     }
