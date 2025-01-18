@@ -42,8 +42,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Training module
     Route::any('training', 'TaskController@training')->name('training');
-
-
+    Route::any('trainingCreate', 'TaskController@trainingCreate')->name('trainingCreate');
+    Route::any('trainingStore', 'TaskController@trainingStore')->name('trainingStore');
+    Route::any('mark-video-watched', 'TaskController@markVideoWatched')->name('markVideoWatched');
+    Route::any('trainingDelete/{id}', 'TaskController@trainingDelete')->name('trainingDelete');
+     
     Route::any('chat/{id}', 'ChatController@index')->name('chat.index');
     Route::any('getUnreadMessageCounts', 'ChatController@getUnreadMessageCounts')->name('getUnreadMessageCounts');
     Route::any('chat', 'ChatController@store')->name('salesUpdate')->name('chatStore');

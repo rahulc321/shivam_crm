@@ -60,6 +60,13 @@
 
                     <div class="card-body">
 
+                        @if($task_access == 0)
+
+                        <h6 style="color: red;">
+                            <i>Please review all training videos before you can access this tab! <a href="{{url('admin/training')}}">Click Here</a></i>
+                        </h6>
+                        @else
+
                         <div class="table-responsive">
                             <table id="datatable-basic" class="table table-bordered text-nowrap w-100">
                                 <thead>
@@ -82,8 +89,8 @@
                                         <td>{{$value->title}}</td>
                                         <td>{{$value->description}}</td>
                                         <td class="end_user" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Email:</strong> {{$value->end_user_name->email}}<br>
-           <strong>Phone:</strong> {{$value->end_user_name->phone_number}}<br>
-           <strong>Address:</strong> {{$value->end_user_name->address}}">
+                                        <strong>Phone:</strong> {{$value->end_user_name->phone_number}}<br>
+                                         <strong>Address:</strong> {{$value->end_user_name->address}}">
                                             <span
                                                 class="badge bg-outline-success">{{$value->end_user_name->full_name}}</span>
                                         </td>
@@ -94,8 +101,8 @@
                                             @foreach(@$value->receivers as $receiver)
                                             <span class="badge bg-outline-success" data-bs-toggle="tooltip"
                                                 data-bs-html="true" title="<strong>Email:</strong> {{ $receiver->email }}<br>
-               <strong>Phone:</strong> {{ $receiver->phone_number }}<br>
-               <strong>Address:</strong> {{ $receiver->address }}">
+                                            <strong>Phone:</strong> {{ $receiver->phone_number }}<br>
+                                            <strong>Address:</strong> {{ $receiver->address }}">
                                                 {{ $receiver->full_name }}
                                             </span>
                                             @endforeach
@@ -181,9 +188,15 @@
                                                                         class="form-label">Select Status:</label>
                                                                     <select name="status" id="status_{{ $value->id }}"
                                                                         class="form-select" required>
-                                                                        <option value="pending" <?php if($value->status == 'pending'){ echo 'selected';} ?>>Pending</option>
-                                                                        <option value="in_progress" <?php if($value->status == 'in_progress'){ echo 'selected';} ?>>In Progress</option>
-                                                                        <option value="completed" <?php if($value->status == 'completed'){ echo 'selected';} ?>>Completed</option>
+                                                                        <option value="pending"
+                                                                            <?php if($value->status == 'pending'){ echo 'selected';} ?>>
+                                                                            Pending</option>
+                                                                        <option value="in_progress"
+                                                                            <?php if($value->status == 'in_progress'){ echo 'selected';} ?>>
+                                                                            In Progress</option>
+                                                                        <option value="completed"
+                                                                            <?php if($value->status == 'completed'){ echo 'selected';} ?>>
+                                                                            Completed</option>
                                                                     </select>
                                                                 </div>
                                                                 <button type="submit"
@@ -200,6 +213,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        @endif
                     </div>
                 </div>
             </div>
