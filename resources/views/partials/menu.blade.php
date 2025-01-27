@@ -98,6 +98,14 @@
                     </li>
                     @endforeach
 
+                    <li class="slide">
+                        <a href="{{ route('admin.contacts') }}"
+                            class="side-menu__item {{ request()->is('admin/contacts*') ? 'active' : '' }}">
+                            Contacts
+                        </a>
+
+                    </li>
+
 
 
 

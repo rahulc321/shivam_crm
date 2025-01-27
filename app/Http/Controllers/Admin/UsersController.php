@@ -8,6 +8,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
+use App\Notes;
+use App\Contacts;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +41,7 @@ class UsersController extends Controller
                 'email' => 'required|email|unique:users,email',
             ]);
 
+            
             $roleId = Role::where('title', $request->input('type'))->first();
             # create a new user with the request data
             $user = User::create($request->all());
@@ -48,6 +51,7 @@ class UsersController extends Controller
                 $user->roles()->sync($roleId->id);
             }
 
+           // dd($user);
 
             //dd($request->all());
             # set a success message in the session
@@ -217,5 +221,38 @@ class UsersController extends Controller
     # Redirect to the admin index page
     return redirect()->route('admin.admin');
 }
+
+
+    public function view_data($id){
+        $users = User::findOrFail($id);
+        $bm_notes = Notes::where('distributer_id',$id)->where('type','bm_notes')->where('notes_type','distributor')->get();
+        $tt_notes = Notes::where('distributer_id',$id)->where('type','tt_notes')->where('notes_type','distributor')->get();
+        return view('admin.users.view_data', compact('users','bm_notes','tt_notes'));
+    }
+    
+    
+    public function notesStore($id, Request $request){
+        $store  = new Notes();
+        $store->distributer_id = $id;
+        $store->type = $request->type;
+        $store->notes = $request->notes;
+         
+        if($request->notes_type){
+            $store->notes_type = $request->notes_type;
+        }
+        
+        $store->save();
+        session()->flash('success', 'Notes successfully added!');
+        return back();
+    }
+
+
+    public function contacts(){
+        error_reporting(0);
+        $contacts = Contacts::get();
+        return view('admin.users.contacts', compact('contacts'));
+    }
+
+
 
 }

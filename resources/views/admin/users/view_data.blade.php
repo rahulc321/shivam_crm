@@ -1,0 +1,199 @@
+@extends('layouts.admin')
+@section('title', 'CRM - View Records')
+@section('content')
+<style>
+    .card{
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="my-4 page-header-breadcrumb d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <div class="">
+                    <nav>
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Users</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Records
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="container">
+                                <div class="row">
+                                    <!-- Store Details -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card" style="background-color: rgb(230, 245, 255);">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Store Details</h5>
+                                                <p><b>Store Location:</b> {{ $users->store_location }}</p>
+                                                <p><b>Store State:</b> {{ $users->store_state }}</p>
+                                                <p><b>Store Email:</b> {{ $users->store_email }}</p>
+                                                <p><b>Store Phone:</b> {{ $users->store_phone }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Branch Manager Details -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card" style="background-color: rgb(245, 230, 255);">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Branch Manager Details</h5>
+                                                <p><b>Name:</b> {{ $users->bm_name }}</p>
+                                                <p><b>Email:</b> {{ $users->bm_email }}</p>
+                                                <p><b>Phone:</b> {{ $users->bm_phone }}</p>
+                                                <p>
+                                                    <b>Notes:</b> {{ $users->bm_notes }}
+                                                    <a style="color:blue" href="javascript:;" data-bs-toggle="modal"
+                                                        data-bs-target="#bmNotesModal">Click Here</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Territory Manager Details -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card" style="background-color: rgb(230, 255, 230);">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Territory Manager Details</h5>
+                                                <p><b>Name:</b> {{ $users->tt_name }}</p>
+                                                <p><b>Email:</b> {{ $users->tt_email }}</p>
+                                                <p><b>Phone:</b> {{ $users->tt_phone }}</p>
+                                                <p>
+                                                    <b>Notes:</b> {{ $users->tt_notes }}
+                                                    <a style="color:blue" href="javascript:;" data-bs-toggle="modal"
+                                                        data-bs-target="#ttNotesModal">Click Here</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modals -->
+                            <!-- Branch Manager Notes Modal -->
+                            <div class="modal fade" id="bmNotesModal" tabindex="-1" aria-labelledby="bmNotesModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="bmNotesModalLabel">Branch Manager Notes</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Display Existing Notes -->
+                                            <div class="mb-3 p-2 rounded"
+                                                style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                <p class="mb-0">{{ $users->bm_notes }}</p>
+                                            </div>
+
+                                            @foreach($bm_notes as $bm_note)
+                                            <div class="mb-3 p-2 rounded"
+                                                style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                <p class="mb-0">{{ $bm_note->notes }}</p>
+                                            </div>
+                                            @endforeach
+
+                                            <!-- Form to Update Notes -->
+                                            <form action="{{ route('admin.notesStore', $users->id) }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="type" value="bm_notes">
+                                                <div class="form-group mb-3">
+                                                    <label for="bm_notes" class="form-label fw-bold">Add or Update
+                                                        Notes:</label>
+                                                    <textarea name="notes" id="bm_notes" class="form-control" rows="5"
+                                                        style="border: 1px solid rgb(220, 220, 220); border-radius: 8px; background-color: rgb(250, 250, 250);"
+                                                        placeholder="Write your notes here..."></textarea>
+                                                </div>
+                                                <div class="form-group text-end">
+                                                    <button type="submit" class="btn btn-info"
+                                                        style="background-color: rgb(0, 123, 255); color: white; border-radius: 8px; padding: 8px 20px;">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Territory Manager Notes Modal -->
+                            <div class="modal fade" id="ttNotesModal" tabindex="-1" aria-labelledby="ttNotesModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ttNotesModalLabel">Territory Manager Notes</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Display Existing Notes -->
+                                            <div class="mb-3 p-2 rounded"
+                                                style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                <p class="mb-0">{{ $users->tt_notes }}</p>
+                                            </div>
+
+                                            @foreach($tt_notes as $tt_note)
+                                            <div class="mb-3 p-2 rounded"
+                                                style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                <p class="mb-0">{{ $tt_note->notes }}</p>
+                                            </div>
+                                            @endforeach
+
+                                            <!-- Form to Update Notes -->
+                                            <form action="{{ route('admin.notesStore', $users->id) }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="type" value="tt_notes">
+                                                <div class="form-group mb-3">
+                                                    <label for="bm_notes" class="form-label fw-bold">Add or Update
+                                                        Notes:</label>
+                                                    <textarea name="notes" id="bm_notes" class="form-control" rows="5"
+                                                        style="border: 1px solid rgb(220, 220, 220); border-radius: 8px; background-color: rgb(250, 250, 250);"
+                                                        placeholder="Write your notes here..."></textarea>
+                                                </div>
+                                                <div class="form-group text-end">
+                                                    <button type="submit" class="btn btn-info"
+                                                        style="background-color: rgb(0, 123, 255); color: white; border-radius: 8px; padding: 8px 20px;">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modals -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

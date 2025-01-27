@@ -20,6 +20,21 @@ class TaskController extends Controller
      */
     public function index()
     {
+
+        // $filePath = public_path('AED_SAMPLE1_Data.mdf');  // Updated path to the file in the public folder
+
+        // $handle = fopen($filePath, 'rb');
+        // if ($handle) {
+        //     while (($line = fgets($handle)) !== false) {
+        //         // Process binary data (requires knowledge of MDF structure)
+        //         echo $line;
+        //     }
+        //     fclose($handle);
+        // } else {
+        //     echo "Error opening the file.";
+        // }
+
+
         $this->data['tasks'] = Task::where(function ($query) {
             
             if (Auth::user()->roles->contains('title', 'Admin')) {

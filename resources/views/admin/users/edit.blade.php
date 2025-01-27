@@ -66,6 +66,9 @@
         </div>
     </div>
 </div>
+<?php 
+
+?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -501,6 +504,73 @@ const fieldsData = {
                 <label class="form-label">Agreement Details(Duration)</label>
                 <input type="text" name="agrement_details_duration" class="form-control" placeholder="Agreement Details(Duration)">
             </div>
+
+            <fieldset class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Store Location</label>
+                <input type="text" name="store_location" class="form-control" placeholder="Store Location">
+            </div>
+
+             <div class="col-md-3">
+                <label class="form-label">Store State</label>
+                <input type="text" name="store_state" class="form-control" placeholder="Store State">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Store Email</label>
+                <input type="text" name="store_email" class="form-control" placeholder="Store Email">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Store Phone</label>
+                <input type="text" name="store_phone" class="form-control" placeholder="Store Phone">
+            </div>
+        </fieldset>
+
+
+        <fieldset class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Branch Manager Name</label>
+                <input type="text" name="bm_name" class="form-control" placeholder="Branch Manager Name">
+            </div>
+
+             <div class="col-md-3">
+                <label class="form-label">Branch Manager Email</label>
+                <input type="text" name="bm_email" class="form-control" placeholder="Branch Manager Email">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Branch Manager Phone</label>
+                <input type="text" name="bm_phone" class="form-control" placeholder="Branch Manager Phone">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Branch Manager Notes</label>
+                <input type="text" name="bm_notes" class="form-control" placeholder="Branch Manager Notes">
+            </div>
+        </fieldset>
+
+        <fieldset class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Territory Manager Name</label>
+                <input type="text" name="tt_name" class="form-control" placeholder="Territory Manager Name">
+            </div>
+
+             <div class="col-md-3">
+                <label class="form-label">Territory Manager Email</label>
+                <input type="text" name="tt_email" class="form-control" placeholder="Territory Manager Email">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Territory Manager Phone</label>
+                <input type="text" name="tt_phone" class="form-control" placeholder="Territory Manager Phone">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Territory Manager Notes</label>
+                <input type="text" name="tt_notes" class="form-control" placeholder="Territory Manager Notes">
+            </div>
+        </fieldset>
         `
 };
 showFields();
