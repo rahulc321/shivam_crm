@@ -69,6 +69,11 @@
                                             <span class="badge {{ $badgeClass }}">{{ $value->type }}</span>
                                         </td>
                                         <td>
+
+                                            <a class="" href="{{ route('admin.view_data', $value->id) }}">
+                                                <span class="badge bg-outline-info">View</span>
+                                            </a>
+
                                             <a class="" href="{{ route('admin.users.edit', $value->id) }}">
                                                 <span class="badge bg-outline-info">Edit</span>
                                             </a>

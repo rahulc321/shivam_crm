@@ -27,6 +27,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::any('admin_store', 'UsersController@admin_store')->name('admin.store');
     Route::any('admin_edit/{id}', 'UsersController@admin_edit')->name('admin.edit');
     Route::any('admin_update/{id}', 'UsersController@admin_update')->name('admin.update');
+
+    Route::any('notesStore/{id}', 'UsersController@notesStore')->name('notesStore');
+    Route::any('view_data/{id}', 'UsersController@view_data')->name('view_data');
+    Route::any('contacts', 'UsersController@contacts')->name('contacts');
+
     Route::resource('users', 'UsersController');
 
     // Case Intake
