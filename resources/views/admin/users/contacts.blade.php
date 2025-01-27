@@ -26,6 +26,8 @@
                         <div class="card-title">
                             Contacts
                         </div>
+                        <a class="" href='{{ route("admin.createContact") }}' style="float:right !important"><span
+                                class="badge bg-outline-info">Add Contacts</span></a>
                     </div>
 
                     <div class="card-body">
