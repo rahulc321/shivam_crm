@@ -253,6 +253,18 @@ class UsersController extends Controller
         return view('admin.users.contacts', compact('contacts'));
     }
 
+    public function createContact(){
+         
+        return view('admin.users.createContact');
+    }
+
+    public function contactStore(Request $request){
+
+            Contacts::create($request->all());
+            session()->flash('success', 'You have successfully added!');
+            return redirect()->route('admin.contacts');
+    }
+
 
 
 }
