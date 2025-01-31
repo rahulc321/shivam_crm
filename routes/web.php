@@ -32,6 +32,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::any('view_data/{id}', 'UsersController@view_data')->name('view_data');
     Route::any('contacts', 'UsersController@contacts')->name('contacts');
 
+    Route::any('contact_view/{id}', 'UsersController@contact_view')->name('contact_view');
+
     Route::any('createContact', 'UsersController@createContact')->name('createContact');
     Route::any('contactStore', 'UsersController@contactStore')->name('contactStore');
 

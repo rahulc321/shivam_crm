@@ -28,7 +28,60 @@
                         <div class="card-title">
                             Records
                         </div>
+                        <a style="color:blue" href="javascript:;" data-bs-toggle="modal"
+                                                        data-bs-target="#ownNotesModal">Click Here</a>
                     </div>
+
+                     <!-- Branch Manager Notes Modal -->
+                     <div class="modal fade" id="ownNotesModal" tabindex="-1" aria-labelledby="bmNotesModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="bmNotesModalLabel">Self Notes</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                            @foreach($selfNotes as $bm_note)
+                                            <div class="mb-3 p-2 rounded"
+                                                style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                <p class="mb-0">{{ $bm_note->notes }}</p>
+                                            </div>
+                                            @endforeach
+
+                                            <!-- Form to Update Notes -->
+                                            <form action="{{ route('admin.notesStore', $users->id) }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="type" value="self_notes">
+                                                <div class="form-group mb-3">
+                                                    <label for="bm_notes" class="form-label fw-bold">Add or Update
+                                                        Notes:</label>
+                                                    <textarea name="notes" id="bm_notes" class="form-control" rows="5"
+                                                        style="border: 1px solid rgb(220, 220, 220); border-radius: 8px; background-color: rgb(250, 250, 250);"
+                                                        placeholder="Write your notes here..."></textarea>
+                                                </div>
+                                                <div class="form-group text-end">
+                                                    <button type="submit" class="btn btn-info"
+                                                        style="background-color: rgb(0, 123, 255); color: white; border-radius: 8px; padding: 8px 20px;">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--  -->
+
 
                     <div class="card-body">
                         <div class="table-responsive">
@@ -39,7 +92,12 @@
                                         <div class="card" style="background-color: rgb(230, 245, 255);">
                                             <div class="card-body">
                                                 <h5 class="card-title">Store Details</h5>
-                                                <p><b>Store Location:</b> {{ $users->store_location }}</p>
+                                                <?php
+                                                    $cont = \DB::table('contacts')->where('id',$users->store_location)->first();
+                                                    $bm = \DB::table('contacts')->where('id',$users->bm_name)->first();
+                                                    $tt = \DB::table('contacts')->where('id',$users->tt_name)->first();
+                                                ?>
+                                                <p><b>Store Location:</b> {{ $cont->store_location }}</p>
                                                 <p><b>Store State:</b> {{ $users->store_state }}</p>
                                                 <p><b>Store Email:</b> {{ $users->store_email }}</p>
                                                 <p><b>Store Phone:</b> {{ $users->store_phone }}</p>
@@ -52,7 +110,7 @@
                                         <div class="card" style="background-color: rgb(245, 230, 255);">
                                             <div class="card-body">
                                                 <h5 class="card-title">Branch Manager Details</h5>
-                                                <p><b>Name:</b> {{ $users->bm_name }}</p>
+                                                <p><b>Name:</b> {{ $bm->store_location }}</p>
                                                 <p><b>Email:</b> {{ $users->bm_email }}</p>
                                                 <p><b>Phone:</b> {{ $users->bm_phone }}</p>
                                                 <p>
@@ -69,7 +127,7 @@
                                         <div class="card" style="background-color: rgb(230, 255, 230);">
                                             <div class="card-body">
                                                 <h5 class="card-title">Territory Manager Details</h5>
-                                                <p><b>Name:</b> {{ $users->tt_name }}</p>
+                                                <p><b>Name:</b> {{ $tt->store_location }}</p>
                                                 <p><b>Email:</b> {{ $users->tt_email }}</p>
                                                 <p><b>Phone:</b> {{ $users->tt_phone }}</p>
                                                 <p>

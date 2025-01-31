@@ -20,7 +20,7 @@ class UsersController extends Controller
     {
         $type = $_REQUEST['type'] ?? ''; // Validate or sanitize this input before using
         $this->data['users'] = User::where('type', 'LIKE', $type)->get();
-        
+ 
         return view('admin.users.index',$this->data);
     }
 
@@ -28,17 +28,22 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::all()->pluck('title', 'id');
+        $this->data['roles'] = Role::all()->pluck('title', 'id');
+        $this->data['bms'] = Contacts::where('type', 'bm')->get();
+        $this->data['tts'] = Contacts::where('type', 'tt')->get();
+        $this->data['stores'] = Contacts::where('type', 'store')->get();
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', $this->data);
     }
 
     public function store(Request $request)
-    {
+    {   
+
+        //dd(1);  
         //try {
             # validate the incoming request data
             $request->validate([
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required',
             ]);
 
             
@@ -69,6 +74,7 @@ class UsersController extends Controller
         // }
 
         # redirect to the users index page
+       // dd(1);
         return redirect()->route('admin.users.index');
     }
 
@@ -227,7 +233,8 @@ class UsersController extends Controller
         $users = User::findOrFail($id);
         $bm_notes = Notes::where('distributer_id',$id)->where('type','bm_notes')->where('notes_type','distributor')->get();
         $tt_notes = Notes::where('distributer_id',$id)->where('type','tt_notes')->where('notes_type','distributor')->get();
-        return view('admin.users.view_data', compact('users','bm_notes','tt_notes'));
+        $selfNotes = Notes::where('distributer_id',$id)->where('type','self_notes')->where('notes_type','distributor')->get();
+        return view('admin.users.view_data', compact('users','bm_notes','tt_notes','selfNotes'));
     }
     
     
@@ -249,7 +256,7 @@ class UsersController extends Controller
 
     public function contacts(){
         error_reporting(0);
-        $contacts = Contacts::get();
+        $contacts = Contacts::orderBy('id','DESC')->get();
         return view('admin.users.contacts', compact('contacts'));
     }
 
@@ -263,6 +270,13 @@ class UsersController extends Controller
             Contacts::create($request->all());
             session()->flash('success', 'You have successfully added!');
             return redirect()->route('admin.contacts');
+    }
+
+    // Contact Views
+    public function contact_view($id){
+        error_reporting(0);
+        $user = Contacts::find($id);
+        return view('admin.users.contact_data', compact('user'));
     }
 
 
