@@ -5,6 +5,11 @@
 .card {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
+.time {
+    font-size: 10px;
+    float: right;
+    padding: 9px;
+}
 </style>
 <div class="main-content app-content">
     <div class="container-fluid">
@@ -115,6 +120,9 @@
                                         <div class="mb-3 p-2 rounded" style="background-color: rgb(240, 248, 255); 
                                         border: 1px solid rgb(200, 230, 255);">
                                             <p class="mb-0">{{ $note->notes }}</p>
+                                            @if($note)
+                                            <span class="time">{{ $note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                            @endif
                                         </div>
                                         @endforeach
 
