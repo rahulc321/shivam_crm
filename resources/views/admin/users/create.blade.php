@@ -15,7 +15,7 @@
                     </nav>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="row">
         <div class="col-xl-12">
@@ -27,7 +27,7 @@
 
                 </div>
                 <div class="card-body">
-                <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data"
                         class="row g-3 mt-0">
                         @csrf
 
@@ -35,12 +35,21 @@
                             <label class="form-label">Type<code>*</code></label>
                             <select class="form-control" name="type" id="type" required onchange="showFields()">
                                 <option value="">Select</option>
-                                <option value="end_user" <?php if($_REQUEST['type'] == 'end_user'){ echo 'selected'; } ?>>End User</option>
-                                <option value="service_agent" <?php if($_REQUEST['type'] == 'service_agent'){ echo 'selected'; } ?>>Service Agents</option>
-                                <option value="potential_user" <?php if($_REQUEST['type'] == 'potential_user'){ echo 'selected'; } ?>>Potential User</option>
-                                <option value="reseller" <?php if($_REQUEST['type'] == 'reseller'){ echo 'selected'; } ?>>Reseller</option>
-                                <option value="retailer" <?php if($_REQUEST['type'] == 'retailer'){ echo 'selected'; } ?>>Retailer</option>
-                                <option value="distributor" <?php if($_REQUEST['type'] == 'distributor'){ echo 'selected'; } ?>>Distributor</option>
+                                <option value="end_user"
+                                    <?php if($_REQUEST['type'] == 'end_user'){ echo 'selected'; } ?>>End User</option>
+                                <option value="service_agent"
+                                    <?php if($_REQUEST['type'] == 'service_agent'){ echo 'selected'; } ?>>Service Agents
+                                </option>
+                                <option value="potential_user"
+                                    <?php if($_REQUEST['type'] == 'potential_user'){ echo 'selected'; } ?>>Potential
+                                    User</option>
+                                <option value="reseller"
+                                    <?php if($_REQUEST['type'] == 'reseller'){ echo 'selected'; } ?>>Reseller</option>
+                                <option value="retailer"
+                                    <?php if($_REQUEST['type'] == 'retailer'){ echo 'selected'; } ?>>Retailer</option>
+                                <option value="distributor"
+                                    <?php if($_REQUEST['type'] == 'distributor'){ echo 'selected'; } ?>>Distributor
+                                </option>
                             </select>
                         </div>
 
@@ -494,7 +503,16 @@ const fieldsData = {
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Store Location</label>
-                <input type="text" name="store_location" class="form-control" placeholder="Store Location">
+                
+                <select name="store_location" class="form-control store">
+                <option value="">Select Store Location</option>
+                <?php foreach ($stores as $store) { ?>
+                     <option value="<?= $store->id ?>" 
+                data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+            <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+        </option>
+                <?php } ?>
+        </select>
             </div>
 
              <div class="col-md-3">
@@ -517,7 +535,16 @@ const fieldsData = {
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Branch Manager Name</label>
-                <input type="text" name="bm_name" class="form-control" placeholder="Branch Manager Name">
+                 
+                <select name="bm_name" class="form-control bm">
+                <option value="">Select</option>
+                <?php foreach ($bms as $store) { ?>
+                   <option value="<?= $store->id ?>" 
+                data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+            <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+        </option>
+                <?php } ?>
+                </select>
             </div>
 
              <div class="col-md-3">
@@ -539,7 +566,15 @@ const fieldsData = {
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Territory Manager Name</label>
-                <input type="text" name="tt_name" class="form-control" placeholder="Territory Manager Name">
+                <select name="tt_name" class="form-control tt">
+                <option value="">Select</option>
+                <?php foreach ($tts as $store) { ?>
+                   <option value="<?= $store->id ?>" 
+                data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+            <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+        </option>
+                <?php } ?>
+                </select>
             </div>
 
              <div class="col-md-3">
@@ -554,7 +589,7 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">Territory Manager Notes</label>
-                <input type="text" name="bm_notes" class="form-control" placeholder="Territory Manager Notes">
+                <input type="text" name="tt_notes" class="form-control" placeholder="Territory Manager Notes">
             </div>
         </fieldset>
 
@@ -566,6 +601,64 @@ function showFields() {
     const dynamicFields = document.getElementById('dynamic-fields');
     dynamicFields.innerHTML = fieldsData[type] || '';
 }
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('store')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="store_state"]').value = parsedData.store_state || ''; 
+                document.querySelector('input[name="store_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="store_phone"]').value = parsedData.phone || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
+});
+
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('bm')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="bm_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="bm_phone"]').value = parsedData.phone || ''; 
+                document.querySelector('input[name="bm_notes"]').value = parsedData.notes || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
+});
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('tt')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="tt_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="tt_phone"]').value = parsedData.phone || ''; 
+                document.querySelector('input[name="tt_notes"]').value = parsedData.notes || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
+});
 </script>
 
 <script>
