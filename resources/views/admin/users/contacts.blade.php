@@ -111,11 +111,11 @@
                                     <div class="modal-body">
                                         <!-- Display Existing Notes -->
                                         <?php 
-                        $bm_notes = App\Notes::where('distributer_id', $user->id)
+                                    $bm_notes = App\Notes::where('contact_id', $user->id)
                                     ->where('type', $user->type.'_notes')
-                                    ->where('notes_type', 'one_to_one')
+                                    // ->where('notes_type', 'one_to_one')
                                     ->get();
-                        ?>
+                                     ?>
                                         @foreach($bm_notes as $note)
                                         <div class="mb-3 p-2 rounded" style="background-color: rgb(240, 248, 255); 
                                         border: 1px solid rgb(200, 230, 255);">
@@ -131,6 +131,7 @@
                                             @csrf
                                             <input type="hidden" name="type" value="{{ $user->type }}_notes">
                                             <input type="hidden" name="notes_type" value="one_to_one">
+                                            <input type="hidden" name="contact_id" value="{{@$user->id}}">
                                             <div class="form-group">
                                                 <label for="notes-{{ $user->id }}" class="form-label fw-bold">Add or
                                                     Update Notes:</label>

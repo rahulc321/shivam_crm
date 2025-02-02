@@ -231,9 +231,13 @@ class UsersController extends Controller
 
     public function view_data($id){
         $users = User::findOrFail($id);
-        $bm_notes = Notes::where('distributer_id',$id)->where('type','bm_notes')->where('notes_type','distributor')->get();
-        $tt_notes = Notes::where('distributer_id',$id)->where('type','tt_notes')->where('notes_type','distributor')->get();
-        $selfNotes = Notes::where('distributer_id',$id)->where('type','self_notes')->where('notes_type','distributor')->get();
+        $bm_notes = Notes::where('distributer_id',$id)->where('type','bm_notes')
+        // ->where('notes_type','distributor')
+        ->get();
+        $tt_notes = Notes::where('distributer_id',$id)->where('type','tt_notes')
+        // ->where('notes_type','distributor')
+        ->get();
+        $selfNotes = Notes::where('distributer_id',$id)->where('type','self_notes')->where('notes_type','distributor')->orderBy('id','DESC')->get();
         return view('admin.users.view_data', compact('users','bm_notes','tt_notes','selfNotes'));
     }
     
@@ -243,6 +247,9 @@ class UsersController extends Controller
         $store->distributer_id = $id;
         $store->type = $request->type;
         $store->notes = $request->notes;
+        if($request->contact_id){
+            $store->contact_id = $request->contact_id;
+        }
          
         if($request->notes_type){
             $store->notes_type = $request->notes_type;

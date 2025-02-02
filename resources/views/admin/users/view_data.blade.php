@@ -11,6 +11,31 @@
     float: right;
     padding: 9px;
 }
+
+.card-body.scr {
+    height: 444px;
+    overflow: scroll;
+}
+
+.card-body.scr {
+    height: 446px;
+    overflow: scroll;
+    scrollbar-color: blue transparent;
+    /* For Firefox */
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.card-body.scr::-webkit-scrollbar {
+    width: 10px;
+}
+
+.card-body.scr::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 5px;
+}
+.card.mt-3 {
+    margin-top: 2px !important;
+}
 </style>
 <div class="main-content app-content">
     <div class="container-fluid">
@@ -34,8 +59,8 @@
                         <div class="card-title">
                             Records
                         </div>
-                        <a style="color:blue" href="javascript:;" data-bs-toggle="modal"
-                            data-bs-target="#ownNotesModal">Click Here</a>
+                        <!-- <a style="color:blue" href="javascript:;" data-bs-toggle="modal"
+                            data-bs-target="#ownNotesModal">Click Here</a> -->
                     </div>
 
                     <!-- Branch Manager Notes Modal -->
@@ -95,15 +120,15 @@
                         <div class="table-responsive">
                             <div class="container">
                                 <div class="row">
-                                    <!-- Store Details -->
+                                    <!-- Left Side: Store, Branch Manager, and Territory Manager Details -->
                                     <div class="col-md-6 mb-4">
-                                        <div class="card" style="background-color: rgb(230, 245, 255);">
+                                        <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">Store Details</h5>
                                                 <?php
-                                                    $cont = \DB::table('contacts')->where('id',$users->store_location)->first();
-                                                    $bm = \DB::table('contacts')->where('id',$users->bm_name)->first();
-                                                    $tt = \DB::table('contacts')->where('id',$users->tt_name)->first();
+                                                    $cont = \DB::table('contacts')->where('id', $users->store_location)->first();
+                                                    $bm = \DB::table('contacts')->where('id', $users->bm_name)->first();
+                                                    $tt = \DB::table('contacts')->where('id', $users->tt_name)->first();
                                                 ?>
                                                 <p><b>Store Location:</b> {{ @$cont->store_location }}</p>
                                                 <p><b>Store State:</b> {{ $users->store_state }}</p>
@@ -111,11 +136,8 @@
                                                 <p><b>Store Phone:</b> {{ $users->store_phone }}</p>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Branch Manager Details -->
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card" style="background-color: rgb(245, 230, 255);">
+                                        <div class="card mt-3">
                                             <div class="card-body">
                                                 <h5 class="card-title">Branch Manager Details</h5>
                                                 <p><b>Name:</b> {{ @$bm->store_location }}</p>
@@ -128,11 +150,8 @@
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Territory Manager Details -->
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card" style="background-color: rgb(230, 255, 230);">
+                                        <div class="card mt-3">
                                             <div class="card-body">
                                                 <h5 class="card-title">Territory Manager Details</h5>
                                                 <p><b>Name:</b> {{ @$tt->store_location }}</p>
@@ -145,6 +164,43 @@
                                                 </p>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <!-- Right Side: Self Notes and Note Form -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card mt-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Add a Note</h5>
+                                                <form method="POST"
+                                                    action="{{ route('admin.notesStore', $users->id) }}">
+                                                    <input type="hidden" name="type" value="self_notes">
+                                                    <input type="hidden" name="contact_id" value="{{@$bm->id}}">
+                                                    
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <textarea name="notes" class="form-control" rows="4"
+                                                            placeholder="Write your note here..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Save Note</button>
+                                                </form>
+                                            </div>
+
+                                            <div class="card-body scr">
+
+                                                @foreach($selfNotes as $bm_note)
+                                                <div class="mb-3 p-2 rounded"
+                                                    style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                    <p class="mb-0">{{ $bm_note->notes }}</p>
+
+                                                    <span
+                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -167,11 +223,19 @@
                                                 <p class="mb-0">{{ $users->bm_notes }}</p>
                                             </div> -->
 
+                                            <?php
+                                            $bm_notes = App\Notes::where('contact_id', $bm->id)
+                                            ->where('type', 'bm_notes')
+                                            // ->where('notes_type', 'one_to_one')
+                                            ->get();
+                                            ?>
+
                                             @foreach($bm_notes as $bm_note)
                                             <div class="mb-3 p-2 rounded"
                                                 style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                 <p class="mb-0">{{ $bm_note->notes }}</p>
-                                                <span class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                <span
+                                                    class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}</span>
                                             </div>
                                             @endforeach
 
@@ -179,6 +243,7 @@
                                             <form action="{{ route('admin.notesStore', $users->id) }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="type" value="bm_notes">
+                                                <input type="hidden" name="contact_id" value="{{@$bm->id}}">
                                                 <div class="form-group mb-3">
                                                     <label for="bm_notes" class="form-label fw-bold">Add or Update
                                                         Notes:</label>
@@ -220,12 +285,18 @@
                                                 style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                 <p class="mb-0">{{ $users->tt_notes }}</p>
                                             </div> -->
-
+                                            <?php
+                                            $tt_notes = App\Notes::where('contact_id', $tt->id)
+                                            ->where('type', 'tt_notes')
+                                            // ->where('notes_type', 'one_to_one')
+                                            ->get();
+                                            ?>
                                             @foreach($tt_notes as $tt_note)
                                             <div class="mb-3 p-2 rounded"
                                                 style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                 <p class="mb-0">{{ $tt_note->notes }}</p>
-                                                <span class="time">{{ $tt_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                <span
+                                                    class="time">{{ $tt_note->created_at->format('d-m-Y @ h:i A') }}</span>
                                             </div>
                                             @endforeach
 
@@ -233,6 +304,7 @@
                                             <form action="{{ route('admin.notesStore', $users->id) }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="type" value="tt_notes">
+                                                <input type="hidden" name="contact_id" value="{{@$tt->id}}">
                                                 <div class="form-group mb-3">
                                                     <label for="bm_notes" class="form-label fw-bold">Add or Update
                                                         Notes:</label>

@@ -33,7 +33,12 @@
 
 
 </head>
-
+<style>
+    .authentication .desktop-logo, .authentication .desktop-dark {
+    height: 6.75rem;
+    line-height: 1.75rem;
+}
+</style>
 <body class="bg-white">
 @include('not')
     <!-- Start Switcher -->
