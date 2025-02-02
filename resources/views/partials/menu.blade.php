@@ -1,3 +1,12 @@
+<style>
+  .app-sidebar .main-sidebar-header .header-logo img {
+    height: 5.5rem;
+    line-height: 9.75rem;
+}
+.app-sidebar .main-sidebar-header {
+    height: 7.25rem;
+}
+</style>
 <div class="main-sidebar" id="sidebar-scroll">
 
     <!-- Start::nav -->
