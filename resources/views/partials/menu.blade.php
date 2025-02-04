@@ -75,7 +75,7 @@
 
             <!--  -->
             <li
-                class="slide has-sub {{ request()->is('admin/permissions*') ? 'open' : '' }} {{ request()->is('admin/roles*') ? 'open' : '' }} {{ request()->is('admin/users*') ? 'open' : '' }}">
+                class="slide has-sub {{ request()->is('admin/permissions*') ? 'open' : '' }} {{ request()->is('admin/roles*') ? 'open' : '' }} {{ request()->is('admin/users*') ? 'open' : '' }} {{ request()->is('admin/contacts*') ? 'open' : '' }}">
                 <a href="javascript:void(0);"
                     class="side-menu__item {{ request()->is('admin/permissions*') ? 'active' : '' }} {{ request()->is('admin/roles*') ? 'active' : '' }} {{ request()->is('admin/users*') ? 'active' : '' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" height="24px" viewBox="0 0 24 24"
@@ -177,3 +177,45 @@
     <!-- End::nav -->
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function validateEmail(email) {
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailPattern.test(email);
+        }
+
+        function validatePhone(phone) {
+            var phonePattern = /^[0-9]{10}$/; // 10-digit phone number
+            return phonePattern.test(phone);
+        }
+
+        function showErrorMessage(inputId, message) {
+            var errorElement = document.getElementById(inputId + "-error");
+            errorElement.innerText = message;
+        }
+
+        function clearErrorMessage(inputId) {
+            var errorElement = document.getElementById(inputId + "-error");
+            errorElement.innerText = "";
+        }
+
+        document.querySelector("[name='email']").addEventListener("keyup", function () {
+            var email = this.value;
+            if (!validateEmail(email)) {
+                showErrorMessage("email", "Please enter a valid email address.");
+            } else {
+                clearErrorMessage("email");
+            }
+        });
+
+        document.querySelector("[name='phone']").addEventListener("keyup", function () {
+            var phone = this.value;
+            if (!validatePhone(phone)) {
+                showErrorMessage("phone", "Please enter a valid 10-digit phone number.");
+            } else {
+                clearErrorMessage("phone");
+            }
+        });
+    });
+</script>

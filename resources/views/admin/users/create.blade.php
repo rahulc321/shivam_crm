@@ -602,6 +602,13 @@ function showFields() {
     dynamicFields.innerHTML = fieldsData[type] || '';
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+        var typeSelect = document.getElementById("type");
+        if (typeSelect.value !== "") {
+            typeSelect.dispatchEvent(new Event("change"));
+        }
+    });
+
 document.addEventListener('change', function(event) {
     if (event.target.classList.contains('store')) {
         const selectedOption = event.target.options[event.target.selectedIndex];

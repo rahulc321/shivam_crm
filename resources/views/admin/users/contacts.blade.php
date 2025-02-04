@@ -121,7 +121,7 @@
                                         border: 1px solid rgb(200, 230, 255);">
                                             <p class="mb-0">{{ $note->notes }}</p>
                                             @if($note)
-                                            <span class="time">{{ $note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                            <span class="time">{{ $note->created_at->format('d-m-Y @ h:i A') }} By: {{@$note->get_name->full_name}}</span>
                                             @endif
                                         </div>
                                         @endforeach
