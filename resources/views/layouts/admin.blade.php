@@ -1312,6 +1312,58 @@
 
     <!-- Internal Select-2.js -->
     <script src="/assets/js/select2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on("keyup", "[name='email'], [name='phone_number']", function () {
+                var form = $(this).closest("form"); // Get the current form
+                var email = form.find("[name='email']").val(); // Get email field value
+                var phone = form.find("[name='phone_number']").val(); // Get phone field value
+                var emailError = form.find(".email-error"); // Email error message
+                var phoneError = form.find(".phone-error"); // Phone error message
+                var submitButton = form.find("[type='submit']"); // Submit button
+                var closeButton = form.find(".close-btn"); // Close button
+
+                var isEmailValid = validateEmail(email);
+                var isPhoneValid = validatePhone(phone);
+
+                // Validate email
+                if (!isEmailValid) {
+                    emailError.text("Please enter a valid email address.").show();
+                } else {
+                    emailError.text("").hide();
+                }
+
+                // Validate phone
+                if (!isPhoneValid) {
+                    phoneError.text("Please enter a valid phone number.").show();
+                } else {
+                    phoneError.text("").hide();
+                }
+
+                // Disable buttons if email or phone is invalid
+                if (!isEmailValid || !isPhoneValid) {
+                    submitButton.prop("disabled", true);
+                    closeButton.prop("disabled", true);
+                } else {
+                    submitButton.prop("disabled", false);
+                    closeButton.prop("disabled", false);
+                }
+            });
+
+            // Email validation function
+            function validateEmail(email) {
+                var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+
+            // Phone validation function (Accepts 10-digit numbers)
+            function validatePhone(phone) {
+                var regex = /^[0-9]{10}$/;
+                return regex.test(phone);
+            }
+        });
+
+    </script>
 
 </body>
 

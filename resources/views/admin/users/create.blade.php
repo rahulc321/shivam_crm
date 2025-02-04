@@ -77,10 +77,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>
@@ -154,10 +156,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>
@@ -232,10 +236,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>
@@ -300,10 +306,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>
@@ -374,10 +382,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>
@@ -450,10 +460,12 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Email)</label>
                 <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Contact Information (Phone Number)</label>
                 <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
+        <span class="phone-error" style="color: red; display: none;"></span>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Address</label>

@@ -280,7 +280,11 @@ class UsersController extends Controller
 
     public function contactStore(Request $request){
 
-            Contacts::create($request->all());
+            $data = $request->all();
+            $data['phone'] = $request->phone_number;
+
+            unset($data['phone_number']);
+            Contacts::create($data);
             session()->flash('success', 'You have successfully added!');
             return redirect()->route('admin.contacts');
     }
