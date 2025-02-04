@@ -508,7 +508,15 @@ const fieldsData = {
             <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Store Location</label>
-                <input type="text" name="store_location" class="form-control" placeholder="Store Location">
+                 <select name="store_location" class="form-control store">
+                <option value="">Select Store Location</option>
+                <?php foreach ($stores as $store) { ?>
+                     <option value="<?= $store->id ?>" 
+                        data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+                    <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+                </option>
+                        <?php } ?>
+                </select>
             </div>
 
              <div class="col-md-3">
@@ -531,7 +539,15 @@ const fieldsData = {
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Branch Manager Name</label>
-                <input type="text" name="bm_name" class="form-control" placeholder="Branch Manager Name">
+                <select name="bm_name" class="form-control bm">
+                <option value="">Select</option>
+                <?php foreach ($bms as $store) { ?>
+                   <option value="<?= $store->id ?>" 
+                data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+            <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+        </option>
+                <?php } ?>
+                </select>
             </div>
 
              <div class="col-md-3">
@@ -553,7 +569,15 @@ const fieldsData = {
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Territory Manager Name</label>
-                <input type="text" name="tt_name" class="form-control" placeholder="Territory Manager Name">
+                 <select name="tt_name" class="form-control tt">
+                <option value="">Select</option>
+                <?php foreach ($tts as $store) { ?>
+                   <option value="<?= $store->id ?>" 
+                data-store='<?= json_encode($store, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+            <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
+            </option>
+                <?php } ?>
+                </select>
             </div>
 
              <div class="col-md-3">
@@ -611,6 +635,65 @@ $(document).ready(function() {
             .length;
         $('#select-all').prop('checked', allSelected);
     });
+});
+
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('store')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="store_state"]').value = parsedData.store_state || ''; 
+                document.querySelector('input[name="store_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="store_phone"]').value = parsedData.phone || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
+});
+
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('bm')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="bm_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="bm_phone"]').value = parsedData.phone || ''; 
+                document.querySelector('input[name="bm_notes"]').value = parsedData.notes || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
+});
+
+document.addEventListener('change', function(event) {
+    if (event.target.classList.contains('tt')) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const storeData = selectedOption.getAttribute('data-store');
+        if (storeData) {
+            try {
+                const parsedData = JSON.parse(storeData);
+                
+                document.querySelector('input[name="tt_email"]').value = parsedData.email || ''; 
+                document.querySelector('input[name="tt_phone"]').value = parsedData.phone || ''; 
+                document.querySelector('input[name="tt_notes"]').value = parsedData.notes || ''; 
+                
+            } catch (e) {
+                console.error("Error parsing store data: ", e.message);
+            }
+        }
+    }
 });
 </script>
 @endsection

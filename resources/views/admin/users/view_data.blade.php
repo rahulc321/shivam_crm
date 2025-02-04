@@ -193,7 +193,7 @@
                                                     <p class="mb-0">{{ $bm_note->notes }}</p>
 
                                                     <span
-                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$bm_note->get_name->full_name}}</span>
                                                 </div>
                                                 @endforeach
                                             </div>
@@ -235,7 +235,7 @@
                                                 style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                 <p class="mb-0">{{ $bm_note->notes }}</p>
                                                 <span
-                                                    class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                    class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$bm_note->get_name->full_name}}</span>
                                             </div>
                                             @endforeach
 
@@ -296,7 +296,7 @@
                                                 style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                 <p class="mb-0">{{ $tt_note->notes }}</p>
                                                 <span
-                                                    class="time">{{ $tt_note->created_at->format('d-m-Y @ h:i A') }}</span>
+                                                    class="time">{{ $tt_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$tt_note->get_name->full_name}}</span>
                                             </div>
                                             @endforeach
 

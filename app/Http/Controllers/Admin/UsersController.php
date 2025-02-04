@@ -86,8 +86,13 @@ class UsersController extends Controller
         $roles = Role::all()->pluck('title', 'id');
 
         $user->load('roles');
+        $this->data['bms'] = Contacts::where('type', 'bm')->get();
+        $this->data['tts'] = Contacts::where('type', 'tt')->get();
+        $this->data['stores'] = Contacts::where('type', 'store')->get();
+        $this->data['user'] = $user;
+        $this->data['roles'] = $roles;
 
-        return view('admin.users.edit', compact('roles', 'user'));
+        return view('admin.users.edit',$this->data);
     }
 
     public function update($id, Request $request)
@@ -244,6 +249,7 @@ class UsersController extends Controller
     
     public function notesStore($id, Request $request){
         $store  = new Notes();
+        $store->user_id = \Auth::Id();
         $store->distributer_id = $id;
         $store->type = $request->type;
         $store->notes = $request->notes;

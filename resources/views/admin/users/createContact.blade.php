@@ -35,7 +35,7 @@
                             <label class="form-label">Type<code>*</code></label>
                             <select class="form-control" name="type" id="type" required onchange="showFields()">
                                 <option value="">Select</option>
-                                <option value="store" <?php if(@$_REQUEST['type'] == 'end_user'){ echo 'selected'; } ?>>Store</option>
+                                <!-- <option value="store" <?php if(@$_REQUEST['type'] == 'end_user'){ echo 'selected'; } ?>>Store</option> -->
                                 <option value="bm" <?php if(@$_REQUEST['type'] == 'service_agent'){ echo 'selected'; } ?>>Branch Manager</option>
                                 <option value="tt" <?php if(@$_REQUEST['type'] == 'potential_user'){ echo 'selected'; } ?>>Territory Manager</option>
                                 
