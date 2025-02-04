@@ -1,6 +1,38 @@
 @extends('layouts.admin')
 @section('title', 'CRM - View Records')
 @section('content')
+<style type="text/css">
+    .card-body.scr {
+    height: 444px;
+    overflow: scroll;
+}
+
+.card-body.scr {
+    height: 446px;
+    overflow: scroll;
+    scrollbar-color: blue transparent;
+    /* For Firefox */
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.card-body.scr::-webkit-scrollbar {
+    width: 10px;
+}
+
+.card-body.scr::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 5px;
+}
+.card.mt-3 {
+    margin-top: 2px !important;
+}
+.time {
+    font-size: 10px;
+    float: right;
+    padding: 9px;
+}
+
+</style>
 
 <div class="main-content app-content">
     <div class="container-fluid">
@@ -30,11 +62,8 @@
                         <div class="table-responsive">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <div class="card" style="background-color: 
-                                            {{ $user->type == 'store' ? 'rgb(230, 245, 255)' : 
-                                            ($user->type == 'bm' ? 'rgb(245, 230, 255)' : 
-                                            ($user->type == 'tt' ? 'rgb(230, 255, 230)' : 'white')) }};">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card" style="">
                                             <div class="card-body">
                                                 <h5 class="card-title">
                                                     @if($user->type == 'store')
@@ -50,8 +79,8 @@
 
                                                 <p><b>Location:</b> {{ $user->store_location ?? 'N/A' }}</p>
                                                 <p><b>State:</b> {{ $user->store_state ?? 'N/A' }}</p>
-                                                <p><b>Email:</b> {{ $user->store_email ?? $user->email }}</p>
-                                                <p><b>Phone:</b> <a style="color:blue" href="tel:{{ $user->phone ?? $user->phone }}">{{ $user->phone ?? $user->phone }}</a></p>
+                                                <p><b>Email:</b> ✉️ {{ $user->store_email ?? $user->email }}</p>
+                                                <p><b>Phone:</b> <a style="color:blue" href="tel:{{ $user->phone ?? $user->phone }}">📞{{ $user->phone ?? $user->phone }}</a></p>
                                                 <?php
                                                     $distributorName = DB::table('users');
                                                     if($user->type == 'bm'){
@@ -82,6 +111,52 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <?php 
+                                    $bm_notes = App\Notes::where('contact_id', $user->id)
+                                    ->where('type', $user->type.'_notes')
+                                      ->orderBy('id', 'DESC')
+                                    ->get();
+                                     ?>
+
+                                    <!-- Right side -->
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card mt-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Add a Note</h5>
+                                                <form method="POST"
+                                                    action="{{ route('admin.notesStore', $user->id) }}">
+                                                     <input type="hidden" name="type" value="{{ $user->type }}_notes">
+                                                    <input type="hidden" name="notes_type" value="one_to_one">
+                                                    <input type="hidden" name="contact_id" value="{{@$user->id}}">
+                                                    
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <textarea name="notes" class="form-control" rows="4"
+                                                            placeholder="Write your note here..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Save Note</button>
+                                                </form>
+                                            </div>
+
+                                            <div class="card-body scr">
+
+                                                @foreach($bm_notes as $bm_note)
+                                                <div class="mb-3 p-2 rounded"
+                                                    style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
+                                                    <p class="mb-0">{{ $bm_note->notes }}</p>
+
+                                                    <span
+                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$bm_note->get_name->full_name}}</span>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
                                 </div>
                             </div>
  

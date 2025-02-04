@@ -85,12 +85,14 @@ const fieldsData = {
             <div class="col-md-3">
                 <label class="form-label">Branch Manager Email</label>
                 <input type="text" name="email" class="form-control" placeholder="Branch Manager Email" >
+        <span class="email-error" style="color: red; display: none;"></span>
             </div>
              
             <div class="col-md-3">
                 <label class="form-label">Branch Manager Phone</label>
-                 <input type="text" name="phone" class="form-control" placeholder="Branch Manager Phone" >
+                 <input type="text" name="phone_number" class="form-control" placeholder="Branch Manager Phone" >
                  <input type="hidden" name="type" class="form-control" value="bm">
+         <span class="phone-error" style="color: red; display: none;"></span>
             </div>
 
             <div class="col-md-3">
@@ -105,13 +107,16 @@ const fieldsData = {
             </div>
             <div class="col-md-3">
                 <label class="form-label">Territory Manager Email</label>
-                <input type="text" name="email" class="form-control" placeholder="Territory Manager Email" >
+                <input type="email" name="email" class="form-control" placeholder="Territory Manager Email" >
+         <span class="email-error" style="color: red; display: none;"></span>
+
             </div>
              
             <div class="col-md-3">
                 <label class="form-label">Territory Manager Phone</label>
-                 <input type="text" name="phone" class="form-control" placeholder="Territory Manager Phone" >
+                 <input type="text" name="phone_number" class="form-control" placeholder="Territory Manager Phone" >
                  <input type="hidden" name="type" class="form-control" value="tt">
+         <span class="phone-error" style="color: red; display: none;"></span>
             </div>
 
             <div class="col-md-3">

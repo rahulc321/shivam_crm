@@ -73,9 +73,9 @@
                                                     <td>
                                                         @if($user->type == 'bm' || $user->type == 'tt')
                                                         {{ $user->notes }}
-                                                        <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                        <!-- <a href="javascript:void(0);" data-bs-toggle="modal"
                                                             data-bs-target="#notesModal-{{ $user->id }}"
-                                                            style="color: blue;">Click Here</a>
+                                                            style="color: blue;">Click Here</a> -->
                                                         @else
                                                         &nbsp;
                                                         @endif
