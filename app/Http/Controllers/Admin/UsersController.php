@@ -39,12 +39,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {   
 
-        //dd(1);  
+       // dd($request->all());  
         //try {
             # validate the incoming request data
-            $request->validate([
-                'email' => 'required',
-            ]);
+            // $request->validate([
+            //     'email' => 'required',
+            // ]);
 
             
             $roleId = Role::where('title', $request->input('type'))->first();
@@ -101,7 +101,7 @@ class UsersController extends Controller
             # Validate the incoming request
             $request->validate([
                 //'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $id,
+                //'email' => 'required|email|unique:users,email,' . $id,
                  
             ]);
 
