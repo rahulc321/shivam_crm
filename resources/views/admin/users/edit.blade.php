@@ -494,6 +494,7 @@ const fieldsData = {
                     <?= htmlspecialchars($store->store_location, ENT_QUOTES, 'UTF-8') ?>
                 </option>
                         <?php } ?>
+                        
                 </select>
             </div>
 
