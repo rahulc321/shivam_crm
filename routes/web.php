@@ -33,6 +33,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::any('contacts', 'UsersController@contacts')->name('contacts');
 
     Route::any('contact_view/{id}', 'UsersController@contact_view')->name('contact_view');
+    
+
+    Route::any('contactDelete/{id}', 'UsersController@contactDelete')->name('contactDelete');
+    Route::any('contactEdit/{id}', 'UsersController@contactEdit')->name('contactEdit');
+    
+    Route::any('contactUpdate/{id}', 'UsersController@contactUpdate')->name('contactUpdate');
+    
 
     Route::any('createContact', 'UsersController@createContact')->name('createContact');
     Route::any('contactStore', 'UsersController@contactStore')->name('contactStore');

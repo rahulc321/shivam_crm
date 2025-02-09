@@ -172,7 +172,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Add a Note</h5>
                                                 <form method="POST"
-                                                    action="{{ route('admin.notesStore', $users->id) }}">
+                                                    action="{{ route('admin.notesStore', $users->id) }}" enctype="multipart/form-data">
                                                     <input type="hidden" name="type" value="self_notes">
                                                     <input type="hidden" name="contact_id" value="{{@$bm->id}}">
                                                     
@@ -181,6 +181,10 @@
                                                         <textarea name="notes" class="form-control" rows="4"
                                                             placeholder="Write your note here..."></textarea>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <input type="file" class="form-control" name="file">
+                                                    </div>
+
                                                     <button type="submit" class="btn btn-primary">Save Note</button>
                                                 </form>
                                             </div>
@@ -191,6 +195,10 @@
                                                 <div class="mb-3 p-2 rounded"
                                                     style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                     <p class="mb-0">{{ $bm_note->notes }}</p>
+
+                                                    @if($bm_note->file)
+                                                        <img src="{{url('/uploads')}}/{{$bm_note->file}}" style="width:200px;height:106px">
+                                                    @endif
 
                                                     <span
                                                         class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$bm_note->get_name->full_name}}</span>

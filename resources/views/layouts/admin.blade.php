@@ -1342,11 +1342,11 @@
 
                 // Disable buttons if email or phone is invalid
                 if (!isEmailValid || !isPhoneValid) {
-                    submitButton.prop("disabled", true);
-                    closeButton.prop("disabled", true);
+                    //submitButton.prop("disabled", true);
+                   // closeButton.prop("disabled", true);
                 } else {
-                    submitButton.prop("disabled", false);
-                    closeButton.prop("disabled", false);
+                    //submitButton.prop("disabled", false);
+                    //closeButton.prop("disabled", false);
                 }
             });
 
