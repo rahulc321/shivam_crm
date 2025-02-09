@@ -96,7 +96,15 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
+                
+                 <select class="form-control" name="state" required >
+                  <option value="">Select</option>
+                  <option value="VIC">VIC</option>
+                  <option value="NSW">NSW</option>
+                  <option value="QLD">QLD</option>
+                  <option value="TAS">TAS</option>
+                  
+               </select>
             </div>
 
              <div class="col-md-3">
@@ -175,7 +183,14 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
+                 
+                  <select class="form-control" name="state" required >
+                  <option value="">Select</option>
+                  <option value="VIC">VIC</option>
+                  <option value="NSW">NSW</option>
+                  <option value="QLD">QLD</option>
+                  <option value="TAS">TAS</option>
+                  </select>
             </div>
 
              <div class="col-md-3">
@@ -255,7 +270,14 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
+                 
+                 <select class="form-control" name="state" required >
+                  <option value="">Select</option>
+                  <option value="VIC">VIC</option>
+                  <option value="NSW">NSW</option>
+                  <option value="QLD">QLD</option>
+                  <option value="TAS">TAS</option>
+                  </select>
             </div>
 
              <div class="col-md-3">
@@ -325,7 +347,14 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
+                  
+                 <select class="form-control" name="state" required >
+                  <option value="">Select</option>
+                  <option value="VIC">VIC</option>
+                  <option value="NSW">NSW</option>
+                  <option value="QLD">QLD</option>
+                  <option value="TAS">TAS</option>
+                  </select>
             </div>
 
              <div class="col-md-3">
@@ -401,7 +430,14 @@ const fieldsData = {
 
             <div class="col-md-3">
                 <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
+                 
+                 <select class="form-control" name="state" required >
+                  <option value="">Select</option>
+                  <option value="VIC">VIC</option>
+                  <option value="NSW">NSW</option>
+                  <option value="QLD">QLD</option>
+                  <option value="TAS">TAS</option>
+                  </select>
             </div>
 
              <div class="col-md-3">
@@ -452,66 +488,7 @@ const fieldsData = {
                 <input type="text" name="full_name" class="form-control" placeholder="Enter distributor name" required>
             </div>
 
-            <div class="col-md-3">
-                <label class="form-label">Contact Person</label>
-                <input type="text" name="contact_persion" class="form-control" placeholder="Contact Person" required>
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label">Contact Information (Email)</label>
-                <input type="email" name="email" class="form-control" placeholder="Enter email" required>
-        <span class="email-error" style="color: red; display: none;"></span>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Contact Information (Phone Number)</label>
-                <input type="text" name="phone_number" class="form-control" placeholder="Enter phone number" required>
-        <span class="phone-error" style="color: red; display: none;"></span>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Address</label>
-                 <input type="text" name="address" class="form-control" placeholder="Enter Address" required>
-            </div>
-             <div class="col-md-3">
-                <label class="form-label">Country</label>
-                 <input type="text" name="country" class="form-control" placeholder="Country">
-            </div>
-
-
-            <div class="col-md-3">
-                <label class="form-label">State</label>
-                 <input type="text" name="state" class="form-control" placeholder="State">
-            </div>
-
-             <div class="col-md-3">
-                <label class="form-label">City</label>
-                 <input type="text" name="city" class="form-control" placeholder="City">
-            </div>
-
-
-            <div class="col-md-3">
-                <label class="form-label">Zipcode</label>
-                 <input type="text" name="zipcode" class="form-control" placeholder="Zipcode">
-            </div>
- 
-            <div class="col-md-3">
-                <label class="form-label">Business Address</label>
-                <input type="text"  name="business_address" class="form-control" placeholder="Enter business address">
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label">Territories Covered</label>
-                <input type="text" name="territories_covered" class="form-control" placeholder="Enter territories covered">
-            </div>
-
-             <div class="col-md-3">
-                <label class="form-label">Agreement Details(Start Date)</label>
-                <input type="date" name="agrement_details_start_date" class="form-control" placeholder="Enter Agreement Details">
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label">Agreement Details(Duration)</label>
-                <input type="text" name="agrement_details_duration" class="form-control" placeholder="Agreement Details(Duration)">
-            </div>
+          
         <fieldset class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">Store Location</label>

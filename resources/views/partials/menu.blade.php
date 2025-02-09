@@ -104,16 +104,28 @@
                             class="side-menu__item {{ request()->query('type') === $roleName ? 'active' : '' }}">
                             {{ $displayRole }}
                         </a>
+
+                        @if($role->title == 'distributor')
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{ route('admin.contacts') }}"
+                                        class="side-menu__item {{ request()->is('admin/contacts*') ? 'active' : '' }}">
+                                        Contacts
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
+
                     </li>
                     @endforeach
 
-                    <li class="slide">
+                    <!-- <li class="slide">
                         <a href="{{ route('admin.contacts') }}"
                             class="side-menu__item {{ request()->is('admin/contacts*') ? 'active' : '' }}">
                             Contacts
                         </a>
 
-                    </li>
+                    </li> -->
 
 
 

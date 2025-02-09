@@ -5,6 +5,7 @@
 .card {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
+
 .time {
     font-size: 10px;
     float: right;
@@ -81,9 +82,32 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a class="" href="{{ route('admin.contact_view', $user ->id) }}">
+                                                        <a class=""
+                                                            href="{{ route('admin.contact_view', $user ->id) }}">
                                                             <span class="badge bg-outline-info">View</span>
                                                         </a>
+
+                                                        <a class="" href="{{ route('admin.contactEdit', $user->id) }}">
+                                                            <span class="badge bg-outline-info">Edit</span>
+                                                        </a>
+
+                                                        <a class="" href="javascript:;"
+                                                            onclick="if(confirm('Are you sure you want to delete this?')) { event.preventDefault(); document.getElementById('deleteFrm<?=$key?>').submit(); }">
+                                                            <span class="badge bg-outline-secondary">Delete</span>
+                                                        </a>
+
+                                                        <form id="deleteFrm{{$key}}"
+                                                            action="{{ route('admin.contactDelete', $user->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                                            style="display: inline-block;">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                value="{{ csrf_token() }}">
+                                                            <input type="submit" class="badge bg-outline-secondary"
+                                                                value="Delete">
+                                                        </form>
+
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -121,7 +145,8 @@
                                         border: 1px solid rgb(200, 230, 255);">
                                             <p class="mb-0">{{ $note->notes }}</p>
                                             @if($note)
-                                            <span class="time">{{ $note->created_at->format('d-m-Y @ h:i A') }} By: {{@$note->get_name->full_name}}</span>
+                                            <span class="time">{{ $note->created_at->format('d-m-Y @ h:i A') }} By:
+                                                {{@$note->get_name->full_name}}</span>
                                             @endif
                                         </div>
                                         @endforeach

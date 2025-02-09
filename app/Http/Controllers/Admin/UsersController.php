@@ -39,12 +39,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {   
 
-        //dd(1);  
+       // dd($request->all());  
         //try {
             # validate the incoming request data
-            $request->validate([
-                'email' => 'required',
-            ]);
+            // $request->validate([
+            //     'email' => 'required',
+            // ]);
 
             
             $roleId = Role::where('title', $request->input('type'))->first();
@@ -101,7 +101,7 @@ class UsersController extends Controller
             # Validate the incoming request
             $request->validate([
                 //'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $id,
+                //'email' => 'required|email|unique:users,email,' . $id,
                  
             ]);
 
@@ -248,7 +248,21 @@ class UsersController extends Controller
     
     
     public function notesStore($id, Request $request){
+
         $store  = new Notes();
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $destinationPath = public_path('uploads');
+            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate unique filename
+            $file->move($destinationPath, $fileName);
+            
+            # store only file name in database
+            $store->file = $fileName;
+        }
+
+
+        
         $store->user_id = \Auth::Id();
         $store->distributer_id = $id;
         $store->type = $request->type;
@@ -295,6 +309,39 @@ class UsersController extends Controller
         $user = Contacts::find($id);
         return view('admin.users.contact_data', compact('user'));
     }
+
+    
+    public function contactDelete($id){
+
+        $user = Contacts::find($id);
+        $user->delete();
+        session()->flash('warning', 'You have successfully deleted!');
+        return back();
+    }
+
+    public function contactEdit($id){
+        
+        $user = Contacts::find($id);
+        return view('admin.users.contactEdit', compact('user'));
+         
+    }
+
+
+    public function contactUpdate($id, Request $request)
+    {
+        $data = $request->all();
+        $data['phone'] = $request->phone;
+        $data['store_location'] = $request->name;
+        unset($data['phone_number']);
+        unset($data['name']);
+        //dd($data);
+        $contact = Contacts::findOrFail($id); # Find the contact by ID
+        $contact->update($data); # Update the contact
+
+        session()->flash('success', 'You have successfully updated the contact!');
+        return redirect()->route('admin.contacts');
+    }
+
 
 
 
