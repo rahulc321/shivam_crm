@@ -342,6 +342,37 @@ class UsersController extends Controller
         return redirect()->route('admin.contacts');
     }
 
+    // Send email
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'recipient_email' => 'required|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+        ]);
+
+        $this->data['data'] = [
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ];
+
+        \Mail::send('email.contact', $this->data, function ($mail) use ($request) {
+            $mail->to($request->recipient_email)
+                ->subject($request->subject);
+
+            # Attach file if provided
+            if ($request->hasFile('attachment')) {
+                $mail->attach($request->file('attachment')->getRealPath(), [
+                    'as' => $request->file('attachment')->getClientOriginalName(),
+                    'mime' => $request->file('attachment')->getMimeType(),
+                ]);
+            }
+        });
+
+        return back()->with('success', 'Email sent successfully!');
+    }
+
 
 
 
