@@ -105,7 +105,7 @@
                                                                 <form id="emailForm" action="{{ route('admin.sendEmail') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
-                                                                    <input type="text" name="recipient_email"
+                                                                    <input type="hidden" name="recipient_email"
                                                                         value="{{ $user->email }}">
 
                                                                     <!-- Subject -->
