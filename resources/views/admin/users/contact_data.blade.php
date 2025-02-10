@@ -2,7 +2,7 @@
 @section('title', 'CRM - View Records')
 @section('content')
 <style type="text/css">
-    .card-body.scr {
+.card-body.scr {
     height: 444px;
     overflow: scroll;
 }
@@ -23,15 +23,16 @@
     background-color: blue;
     border-radius: 5px;
 }
+
 .card.mt-3 {
     margin-top: 2px !important;
 }
+
 .time {
     font-size: 10px;
     float: right;
     padding: 9px;
 }
-
 </style>
 
 <div class="main-content app-content">
@@ -79,8 +80,70 @@
 
                                                 <p><b>Location:</b> {{ $user->store_location ?? 'N/A' }}</p>
                                                 <p><b>State:</b> {{ $user->store_state ?? 'N/A' }}</p>
-                                                <p><b>Email:</b> ✉️ {{ $user->store_email ?? $user->email }}</p>
-                                                <p><b>Phone:</b> <a style="color:blue" href="tel:{{ $user->phone ?? $user->phone }}">📞{{ $user->phone ?? $user->phone }}</a></p>
+
+                                                <!-- Email with popup -->
+                                                <!-- Email Link -->
+                                                <p><b>Email:</b>
+                                                    <a style="color:blue; cursor:pointer;" data-bs-toggle="modal"
+                                                        data-bs-target="#emailModal">
+                                                        ✉️ {{ $user->store_email ?? $user->email }}
+                                                    </a>
+                                                </p>
+
+                                                <!-- Bootstrap Email Modal -->
+                                                <div class="modal fade" id="emailModal" tabindex="-1"
+                                                    aria-labelledby="emailModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="emailModalLabel">Send Email
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="emailForm" action="{{ route('admin.sendEmail') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <input type="text" name="recipient_email"
+                                                                        value="{{ $user->email }}">
+
+                                                                    <!-- Subject -->
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Subject</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="subject" required>
+                                                                    </div>
+
+                                                                    <!-- Message -->
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Message</label>
+                                                                        <textarea class="form-control" name="message"
+                                                                            rows="4" required></textarea>
+                                                                    </div>
+
+                                                                    <!-- Attachment -->
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Attachment</label>
+                                                                        <input type="file" class="form-control"
+                                                                            name="attachment">
+                                                                    </div>
+
+                                                                    <!-- Submit Button -->
+                                                                    <button type="submit" class="btn btn-primary">Send
+                                                                        Email</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Email with popup -->
+
+                                                <p><b>Phone:</b> <a style="color:blue"
+                                                        href="tel:{{ $user->phone ?? $user->phone }}">📞{{ $user->phone ?? $user->phone }}</a>
+                                                </p>
                                                 <?php
                                                     $distributorName = DB::table('users');
                                                     if($user->type == 'bm'){
@@ -124,12 +187,12 @@
                                         <div class="card mt-3">
                                             <div class="card-body">
                                                 <h5 class="card-title">Add a Note</h5>
-                                                <form method="POST"
-                                                    action="{{ route('admin.notesStore', $user->id) }}" enctype="multipart/form-data">
-                                                     <input type="hidden" name="type" value="{{ $user->type }}_notes">
+                                                <form method="POST" action="{{ route('admin.notesStore', $user->id) }}"
+                                                    enctype="multipart/form-data">
+                                                    <input type="hidden" name="type" value="{{ $user->type }}_notes">
                                                     <input type="hidden" name="notes_type" value="one_to_one">
                                                     <input type="hidden" name="contact_id" value="{{@$user->id}}">
-                                                    
+
                                                     @csrf
                                                     <div class="mb-3">
                                                         <textarea name="notes" class="form-control" rows="4"
@@ -150,10 +213,12 @@
                                                     style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                     <p class="mb-0">{{ $bm_note->notes }}</p>
                                                     @if($bm_note->file)
-                                                        <img src="{{url('/uploads')}}/{{$bm_note->file}}" style="width:200px;height:106px">
+                                                    <img src="{{url('/uploads')}}/{{$bm_note->file}}"
+                                                        style="width:200px;height:106px">
                                                     @endif
                                                     <span
-                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }} By: {{@$bm_note->get_name->full_name}}</span>
+                                                        class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}
+                                                        By: {{@$bm_note->get_name->full_name}}</span>
                                                 </div>
                                                 @endforeach
                                             </div>
@@ -165,7 +230,7 @@
 
                                 </div>
                             </div>
- 
-                             
+
+
                         </div>
                         @endsection

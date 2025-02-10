@@ -40,6 +40,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     
     Route::any('contactUpdate/{id}', 'UsersController@contactUpdate')->name('contactUpdate');
     
+    Route::any('send-email', 'UsersController@sendEmail')->name('sendEmail');
+
+    
 
     Route::any('createContact', 'UsersController@createContact')->name('createContact');
     Route::any('contactStore', 'UsersController@contactStore')->name('contactStore');
