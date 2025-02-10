@@ -570,7 +570,7 @@
             <!-- End::header-element -->
 
             <!-- Start::header-element -->
-            <div class="header-element header-search d-md-block d-none my-auto">
+            <div class="header-element header-search d-md-block d-none my-auto" style="display:none !important">
                 <!-- Start::header-link -->
                 <input type="text" class="header-search-bar form-control" id="header-search"
                     placeholder="Search for anything here..." spellcheck=false autocomplete="off" autocapitalize="off">
@@ -601,7 +601,7 @@
             <!-- Start::header-element -->
             <li class="header-element country-selector dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
-                <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
+                <a style="display:none !important" href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
                     data-bs-toggle="dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" class="header-link-icon" height="24px" viewBox="0 0 24 24"
                         width="24px" fill="#000000">
@@ -718,17 +718,7 @@
             <!-- Start::header-element -->
             <li class="header-element cart-dropdown dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
-                <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
-                    data-bs-toggle="dropdown">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="header-link-icon" height="24px" viewBox="0 0 24 24"
-                        width="24px" fill="#000000">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path d="M15.55 11l2.76-5H6.16l2.37 5z" opacity=".1" />
-                        <path
-                            d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
-                    </svg>
-                    <span class="badge bg-primary rounded-pill header-icon-badge" id="cart-icon-badge">5</span>
-                </a>
+                 
                 <!-- End::header-link|dropdown-toggle -->
                 <!-- Start::main-header-dropdown -->
                 <div class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
