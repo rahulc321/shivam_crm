@@ -197,7 +197,17 @@
                                                     <p class="mb-0">{{ $bm_note->notes }}</p>
 
                                                     @if($bm_note->file)
-                                                        <img src="{{url('/uploads')}}/{{$bm_note->file}}" style="width:200px;height:106px">
+                                                    <div style="position: relative; display: inline-block;">
+                                                        <img src="{{ url('/uploads') }}/{{ $bm_note->file }}"
+                                                            style="width:200px;height:106px">
+
+                                                         
+                                                        <a href="{{ url('/uploads') }}/{{ $bm_note->file }}" download
+                                                            style="position: absolute; top: 80px; left: 1px; background: rgba(0, 0, 0, 0.6); 
+                  padding: 5px 10px; border-radius: 50%; color: white; text-decoration: none;">
+                                                            ⬇
+                                                        </a>
+                                                    </div>
                                                     @endif
 
                                                     <span

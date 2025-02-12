@@ -102,7 +102,8 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="emailForm" action="{{ route('admin.sendEmail') }}"
+                                                                <form id="emailForm"
+                                                                    action="{{ route('admin.sendEmail') }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <input type="hidden" name="recipient_email"
@@ -213,9 +214,19 @@
                                                     style="background-color: rgb(240, 248, 255); border: 1px solid rgb(200, 230, 255);">
                                                     <p class="mb-0">{{ $bm_note->notes }}</p>
                                                     @if($bm_note->file)
-                                                    <img src="{{url('/uploads')}}/{{$bm_note->file}}"
-                                                        style="width:200px;height:106px">
+                                                    <div style="position: relative; display: inline-block;">
+                                                        <img src="{{ url('/uploads') }}/{{ $bm_note->file }}"
+                                                            style="width:200px;height:106px">
+
+                                                         
+                                                        <a href="{{ url('/uploads') }}/{{ $bm_note->file }}" download
+                                                            style="position: absolute; top: 80px; left: 1px; background: rgba(0, 0, 0, 0.6); 
+                  padding: 5px 10px; border-radius: 50%; color: white; text-decoration: none;">
+                                                            ⬇
+                                                        </a>
+                                                    </div>
                                                     @endif
+
                                                     <span
                                                         class="time">{{ $bm_note->created_at->format('d-m-Y @ h:i A') }}
                                                         By: {{@$bm_note->get_name->full_name}}</span>
